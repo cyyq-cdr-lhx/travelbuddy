@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #77b300 3px solid;
+        }
+        header a, header h1 {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header h1 {
+            float: left;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header nav a {
+            margin-left: 20px;
+        }
+        .profile-section {
+            display: flex;
+            margin-top: 20px;
+        }
+        .profile-details, .profile-content {
+            width: 50%;
+            padding: 20px;
+            background: #fff;
+            margin-right: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .profile-content {
+            width: calc(50% - 10px);
+        }
+        .section {
+            margin-top: 20px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin-top: 0;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #77b300;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Home Page</h1>
+        <nav>
+            <a th:href="@{/profile}">个人信息</a>
+            <a th:href="@{/travelInterests}">旅游意向</a>
+            <a th:href="@{/autoTeam}">自动组队</a>
+            <a th:href="@{/routePlanning}">路线规划</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div class="profile-section">
+        <div class="profile-details">
+            <h2>User Profile</h2>
+            <p><strong>Username:</strong></p>
+            <p th:text="${homeUser.username}"></p>
+            <p><strong>Gender:</strong> </p>
+            <p><strong>Birthdate:</strong> </p>
+            <p><strong>Bio:</strong></p>
+        </div>
+        <div class="profile-content">
+            <div class="section">
+                <h2>我的旅程</h2>
+                <!-- My Journeys content here -->
+            </div>
+            <div class="section">
+                <h2>旅行相册</h2>
+                <div class="buttons">
+                    <a href="#">上传图像</a>
+                </div>
+                <!-- Photo Gallery content here -->
+            </div>
+            <div class="section">
+                <h2>我的旅行日志</h2>
+                <div class="buttons">
+                    <a href="#">新建日志</a>
+                </div>
+                <!-- Travel Logs content here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
