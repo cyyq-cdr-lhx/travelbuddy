@@ -95,6 +95,8 @@
             <h2>User Profile</h2>
             <p><strong>Username:</strong></p>
             <p th:text="${homeUser.username}"></p>
+            <p><strong>Email:</strong></p>
+            <p th:text="${homeUser.email}"></p>
             <p><strong>Gender:</strong> </p>
             <p><strong>Birthdate:</strong> </p>
             <p><strong>Bio:</strong></p>
@@ -107,7 +109,7 @@
             <div class="section">
                 <h2>旅行相册</h2>
                 <div class="buttons">
-                    <a href="#">上传图像</a>
+                    <a th:href="@{/upload(email = ${homeUser.email})}">上传图像</a>
                 </div>
                 <!-- Photo Gallery content here -->
             </div>
