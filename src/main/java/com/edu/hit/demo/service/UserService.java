@@ -18,8 +18,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Users saveUser(Users user) {
-        return userRepository.save(user);
+    public void saveUser(Users user) {
+        userRepository.save(user);
     }
 
     public void deleteUser(Integer id) {
@@ -30,7 +30,6 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public Users updateUser(Users user) {
-        return userRepository.save(user);
-    }
+    public void updateUser(Users user) { userRepository.save(user);   }
+
 }

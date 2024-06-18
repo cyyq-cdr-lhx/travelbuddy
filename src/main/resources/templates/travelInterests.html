@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Interests</title>
+    <!--<link rel="stylesheet" href="../static/form.css" th:href="@{/static/form.css}">-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        form {
+            border: none;
+        }
+        input, textarea {
+            border: none;
+            outline: none;
+        }
+        .buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #77b300;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        #saveButton {
+
+            background: #77b300;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<h2>User Travel Interest</h2>
+    <p><strong>Now ，write down your dream trip this year!And we will try our best! to find you travel partners!</strong></p>
+
+    <form method="post" th:action="@{/travelInterests}" th:object="${userInterest}">
+        <input type="hidden" name="userEmail" th:value ="${userEmail}"><!--!!!!!!-->
+
+        <label for="startCity"><strong>Start city:</strong></label>
+        <input type="text" id="startCity" name="startCity" th:field="*{startcity}" th:value="${userInterest.startcity}" />
+        <br/>
+        <label for="dest"><strong>Destination:</strong></label>
+        <input type="text" id="dest" name="dest" th:field="*{destination}" th:value="${userInterest.destination}" />
+        <br/>
+        <label for="duration"><strong>Duration(/day):</strong></label>
+        <input type="number" id="duration" name="duration" th:field="*{duration}" th:value="${userInterest.duration}" />
+        <br/>
+        <label for="startDay"><strong>Start Date:</strong></label>
+        <input type="date" id="startDay" name="startDay" th:field="*{startDay}" th:value="${userInterest.startDay}" />
+        <br/>
+        <label for="endDay"><strong>End Date:</strong></label>
+        <input type="date" id="endDay" name="endDay" th:field="*{endDay}" th:value="${userInterest.endDay}" />
+        <br/>
+        <p><strong>Optional choices:???</strong></p>
+
+        <label for="num"><strong>the Best number of people you think of travel with:</strong></label>
+        <input type="number" id="num" name="num"  />
+
+        <button type="submit" id="saveButton" >Save</button>
+    </form>
+    <div class="buttons">
+        <a th:href="@{/homePage}">Back to Homepage</a>
+    </div>
+</div>
+</body>
+</html>

@@ -6,4 +6,5 @@ public interface UserRepository extends JpaRepository<Users, Integer>{
     // 自定义查询方法
     Users findByUsername(String username);
     Users findByEmail(String email);
+
 }
