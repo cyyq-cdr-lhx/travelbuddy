@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>路径显示</title>
+</head>
+<body>
+<div class="container">
+    <h1>规划的路线</h1>
+    <p>从 <span th:text="${start}"></span> 到 <span th:text="${destination}"></span> 的路线</p>
+    <button onclick="window.location.href='/rateRoute'">评价此路线</button>
+</div>
+</body>
+</html>
