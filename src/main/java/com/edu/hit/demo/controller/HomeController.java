@@ -91,6 +91,11 @@ public class HomeController {
             }
         }
     }
+    @GetMapping("/routePlan")
+    public String showRoutePlan() {
+        return "routePlan";  // 返回名为 'route.html' 的视图
+    }
+
 
 
 
