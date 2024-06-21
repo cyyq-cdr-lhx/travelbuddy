@@ -17,6 +17,20 @@ public class Users {
 
     private String username;
     private String email;
+    private String gender;
+
+
+    private String birthdate;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    private String bio;
 
     private String password;
 
@@ -46,6 +60,14 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getGender() {  return gender;    }
+
+    public void setGender(String gender) {this.gender = gender;    }
+
+    public String getBirthdate() { return birthdate;    }
+
+    public void setBirthdate(String birthdate) { this.birthdate = birthdate;    }
+
 
     public String getPassword(){
         return password;
@@ -54,4 +76,10 @@ public class Users {
     public void setPassword(String password){
         this.password = password;
     }
+
+
+
+
+
+
 }

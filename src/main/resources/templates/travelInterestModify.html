@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modify Travel Interests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .main-content {
+            flex: 3;
+            padding: 20px;
+        }
+        .sidebar {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        }
+        form {
+            border: none;
+        }
+        input, textarea {
+            border: none;
+            outline: none;
+        }
+        .buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #77b300;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        #saveButton {
+            background: #77b300;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 10px 20px;
+        }
+        .interests-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .interests-list li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="main-content">
+        <h2>Modify Travel Interest</h2>
+        <p><strong>You can get the existing travel interest modified</strong></p>
+
+        <form method="post" th:action="@{/modifyInterest}" th:object="${interest}">
+            <input type="hidden" name="id" th:field="*{id}" />
+            <input type="hidden" name="userEmail" th:field="*{email}" />
+
+            <label for="startCity"><strong>Start city:</strong></label>
+            <input type="text" id="startCity" name="startCity" th:field="*{startcity}" />
+            <br/>
+            <label for="dest"><strong>Destination:</strong></label>
+            <input type="text" id="dest" name="dest" th:field="*{destination}" />
+            <br/>
+            <label for="duration"><strong>Duration(/day):</strong></label>
+            <input type="number" id="duration" name="duration" th:field="*{duration}" />
+            <br/>
+            <label for="startDay"><strong>Start Date:</strong></label>
+            <input type="date" id="startDay" name="startDay" th:field="*{startDay}" />
+            <br/>
+            <label for="endDay"><strong>End Date:</strong></label>
+            <input type="date" id="endDay" name="endDay" th:field="*{endDay}" />
+            <br/>
+
+            <button type="submit" id="saveButton">Save</button>
+        </form>
+        <div class="buttons">
+            <a th:href="@{/travelInterests}">Back to Travel Interests Page</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

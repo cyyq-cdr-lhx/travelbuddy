@@ -98,7 +98,7 @@
 <div class="container">
     <div class="upload-section">
         <h2>Upload New Photos</h2>
-        <form th:action="@{/upload(email= ${homeUser.email})}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/upload(email = ${homeUser.getEmail()})}" method="post" enctype="multipart/form-data">
             <input type="text" name="caption" placeholder="Enter a caption" required>
             <input type="file" name="images" accept="image/*" required multiple onchange="previewImages(event)">
             <div class="preview" id="preview"></div>

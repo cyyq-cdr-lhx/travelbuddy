@@ -62,6 +62,14 @@ public class PostService {
         return commentRepository.findByPost(post);
     }
 
+    public List<Post> findPostsByEmail(String email){
+        return postRepository.findByEmail(email);
+    }
+
+    public List<Comment> findCommentsByEmail(String email){
+        return commentRepository.findByEmail(email);
+    }
+
 
 
 }

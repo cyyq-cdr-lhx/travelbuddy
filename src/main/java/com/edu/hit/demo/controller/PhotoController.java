@@ -32,6 +32,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+
+@SessionAttributes("homeUser")
 @Controller
 public class PhotoController {
 
@@ -51,16 +53,20 @@ public class PhotoController {
     private UserService userService;
 
     @GetMapping("/upload")
-    public String showUploadForm(@RequestParam("email") String email, Model model) {
-        Users findUser = userService.getUserByEmail(email);
+    public String showUploadForm(@RequestParam("email") String hEmail, Model model) {
+        Users findUser = userService.getUserByEmail(hEmail);
+        System.out.println(findUser.getEmail());
+        System.out.println(findUser.getUsername());
         model.addAttribute("homeUser", findUser);
         return "upload";
     }
     @Transactional
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("email") String email,@RequestParam("caption") String caption,
+    public String handleFileUpload(@RequestParam("email") String hEmail,@RequestParam("caption") String caption,
                                    @RequestParam("images") MultipartFile[] images,Model model) throws IOException {
-        Users findUser = userService.getUserByEmail(email);
+        Users findUser = userService.getUserByEmail(hEmail);
+        System.out.println(findUser.getEmail());
+        System.out.println(findUser.getUsername());
         model.addAttribute("homeUser", findUser);
         try {
             //List<byte[]> imageDatas = new ArrayList<>();
@@ -87,7 +93,7 @@ public class PhotoController {
                 }
                 byte[] imageData = image.getBytes();
                 //上传七牛
-                String imageName = imageUtil.uploadImage(imageData, email);
+                String imageName = imageUtil.uploadImage(imageData, findUser.getEmail());
 
                 com.edu.hit.demo.model.Image image1 = new com.edu.hit.demo.model.Image();
                 image1.setName(imageName);
