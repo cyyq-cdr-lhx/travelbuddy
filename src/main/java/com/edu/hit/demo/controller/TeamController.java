@@ -21,6 +21,7 @@ public class TeamController {
     public String autoTeam(@ModelAttribute("homeUser") Users hUser, Model model) {
         List<Users> matchedUsers = matchingService.findTeammates(hUser);
         model.addAttribute("matchedUsers", matchedUsers);
+        model.addAttribute("homeUser",hUser);
         return "autoTeam";
     }
 

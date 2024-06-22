@@ -92,7 +92,7 @@
             <button type="submit" id="saveButton">Save</button>
         </form>
         <div class="buttons">
-            <a th:href="@{/homePage}">Back to Homepage</a>
+            <a th:href="@{/backToHomePage}">Back to Homepage</a>
         </div>
     </div>
     <div class="sidebar">
@@ -107,8 +107,12 @@
 
                 <form th:action="@{/modifyInterest}" method="get">
                     <input type="hidden" name="id" th:value="${interest.id}" />
-
                     <button type="submit">Modify</button>
+                </form>
+                <form th:action="@{/deleteInterest}" method="get">
+                    <input type="hidden" name="id" th:value="${interest.id}" />
+                    <button type="submit">Delete</button>
+
                 </form>
             </li>
         </ul>

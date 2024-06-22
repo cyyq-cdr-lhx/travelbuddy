@@ -43,7 +43,8 @@ public class InterestController {
         model.addAttribute("userInterest",new Interests());
         model.addAttribute("userEmail",hUser.getEmail());
         model.addAttribute("userInterests",userInterests);
-        model.addAttribute("userEmail", hUser.getEmail());
+        model.addAttribute("homeUser",hUser);
+        //model.addAttribute("userEmail", hUser.getEmail());
 
 
         return "travelInterests";
@@ -91,6 +92,27 @@ public class InterestController {
 
         List<Interests> userInterests = interestService.getInterestByEmail(hUser.getEmail());
         model.addAttribute("userInterests",userInterests);
+        model.addAttribute("userInterest",new Interests());
+        return "travelInterests";
+    }
+
+    @GetMapping("/deleteInterest")
+
+    public String deleteInterest (
+            @RequestParam("id") Integer thId,
+            @ModelAttribute("homeUser") Users thUser,
+            Model model
+    ){
+        System.out.println(thId);
+        Interests thInterest = interestService.getInterestById(thId);
+        if(thInterest!=null){
+            interestService.deleteInterestById(thId);
+
+        }
+
+        List<Interests> userInterests = interestService.getInterestByEmail(thUser.getEmail());
+        model.addAttribute("userInterests",userInterests);
+        model.addAttribute("userInterest",new Interests());
         return "travelInterests";
     }
 

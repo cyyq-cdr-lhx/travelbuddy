@@ -50,6 +50,20 @@ public class ImageUtil {
         }
     }
 
+    public  String getFilePath(String fileName) {
+        //自己的域名路径+文件名
+        String publicUrl = "https://portal.qiniu.com/cdn/domain/sf9n665zc.hb-bkt.clouddn.com/"+ fileName;
+
+         Auth auth = Auth.create(accessKey, secretKey);
+         long expireInSeconds = 3600; //1小时，可以自定义链接过期时间
+         String finalUrl = auth.privateDownloadUrl(publicUrl, expireInSeconds);
+
+        return publicUrl;
+    }
+
+
+
+
 
 
 

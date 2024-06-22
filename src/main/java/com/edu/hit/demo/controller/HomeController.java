@@ -65,6 +65,14 @@ public class HomeController {
         return "homePage";  // Return the name of your home page view
     }
 
+    @GetMapping("/backToHomePage")
+    public String backToHomePage(@ModelAttribute("homeUser") Users hUser,Model model){
+        model.addAttribute("homeUser",hUser);
+        return "homePage";
+    }
+
+
+
     @PostMapping("/signUpSuc")
     public String SignUpCheck(@ModelAttribute SignUser signUser, Model model){
         Users findUser = userService.getUserByEmail(signUser.getEmail());

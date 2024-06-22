@@ -96,7 +96,7 @@
             <img th:src="@{${post.imageUrl}}" alt="User photo">
             -->
             <div class="actions">
-                <a th:href="@{/postDetail(thisPost = ${post})}" class="btn">查看详情</a>
+                <a th:href="@{/postDetail/{postId}(postId=${post.id})}" class="btn">查看详情</a>
                 <button th:onclick="'likePost(' + ${post.id} + ')'">Like</button>
                 <button th:onclick="'commentPost(' + ${post.id} + ')'">Comment</button>
                 <span th:text="${post.likes} + ' likes'"></span>

@@ -9,5 +9,10 @@ import java.util.List;
 public interface InterestRepository extends JpaRepository<Interests, String> {
     List<Interests> findByEmail(String email);
     Interests findById(Integer id);
+    void deleteById(Integer id);
+
+
+
+
 
 }

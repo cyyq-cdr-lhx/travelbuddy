@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Post Detail</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .post img {
+            max-width: 100%;
+            height: auto;
+        }
+        .post-images {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .post-images img {
+            flex: 1 1 calc(33.333% - 10px); /* 3 images per row */
+            margin: 5px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Post Detail</h1>
+        <nav>
+            <a th:href="@{/getProfile}">Profile</a>
+            <a th:href="@{/upload}">Upload Photo</a>
+            <a th:href="@{/feed}">Back to Feed</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div class="post-detail-section">
+        <div class="post">
+            <h3 th:text="${post.username}"></h3>
+            <p th:text="${post.email}"></p>
+            <p th:text="${post.caption}"></p>
+            <div class="actions">
+                <div th:each="image : ${images}">
+                    <img th:src="${image}" alt="User photo">
+                    <a th:href="${image}">图片详情</a>
+                </div>
+
+                <span th:text="${post.likes} + ' likes'"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

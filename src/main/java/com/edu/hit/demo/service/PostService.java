@@ -54,6 +54,10 @@ public class PostService {
         // return postRepository.findAllOrderByLikesDesc();
     }
 
+    public Post getPostById(Long postId) {
+        return postRepository.findById(postId).orElseThrow();
+    }
+
     public List<Image> getImagesByPost(Post post) {
         return imageRepository.findByPost(post);
     }

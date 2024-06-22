@@ -124,10 +124,28 @@ public class PhotoController {
 
 
     @GetMapping("/feed")
-    public String showFeed(Model model) {
+    public String showFeed(Model model,@ModelAttribute("homeUser") Users hUser) {
         List<Post> posts = postService.findAllOrderByLikesDesc();
         model.addAttribute("posts", posts); // 确保正确添加数据到模型中
+        model.addAttribute("homeUser",hUser);
         return "feed";
+    }
+    @GetMapping("/postDetail/{postId}")
+    public String viewPostDetail(@ModelAttribute("homeUser") Users hUser,
+                                 @PathVariable("postId") Long postId,
+                                 Model model){
+        Post post = postService.getPostById(postId);
+        ImageUtil  imageUtil = new ImageUtil();
+        List<String> imageUtils = new ArrayList<>();
+        for (Image image: post.getImageData()){
+            String url = imageUtil.getFilePath(image.getName());
+            imageUtils.add(url);
+        }
+        model.addAttribute("homeUser",hUser);
+        model.addAttribute("post",post);
+        model.addAttribute("images",imageUtils);
+        return "postDetail";
+
     }
 
     @PostMapping("/like/{id}")
