@@ -6,6 +6,10 @@ import lombok.Setter;
 
 
 import jakarta.persistence.*;
+
+import java.util.List;
+import java.util.Map;
+
 @Getter
 @Setter
 @Entity
@@ -22,60 +26,85 @@ public class Users {
 
     private String birthdate;
 
-    public String getBio() {
-        return bio;
-    }
+    //@OneToMany(mappedBy = "inviter",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "inviter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Invitee> invitees;
 
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
 
     private String bio;
-
     private String password;
-
-    public Integer getId() {
-        return id;
-    }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-
-    public String getUsername() {
-        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public void setInvitees(List<Invitee> invitees) {
+        this.invitees = invitees;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
     public String getEmail() {
         return email;
     }
 
-
-
-    public void setEmail(String email) {
-        this.email = email;
+    public String getGender() {
+        return gender;
     }
-    public String getGender() {  return gender;    }
 
-    public void setGender(String gender) {this.gender = gender;    }
+    public String getBirthdate() {
+        return birthdate;
+    }
 
-    public String getBirthdate() { return birthdate;    }
+    public List<Invitee> getInvitees() {
+        return invitees;
+    }
 
-    public void setBirthdate(String birthdate) { this.birthdate = birthdate;    }
+    public String getBio() {
+        return bio;
+    }
 
-
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password){
-        this.password = password;
-    }
+
+
+
+
+
 
 
 

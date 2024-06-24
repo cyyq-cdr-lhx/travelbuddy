@@ -34,5 +34,9 @@ public class UserService {
     public Users updateUser(Users user) {
         return userRepository.save(user);
     }
+
+    public List<Users> findInvitersByInvitee(Users invitee){
+        return userRepository.findUsersByInvitee(invitee);
+    }
 }
 

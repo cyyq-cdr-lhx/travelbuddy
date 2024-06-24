@@ -40,6 +40,7 @@ public class HomeController {
 
     @PostMapping("/homePage")
     public String loginCheck(@ModelAttribute Users user, Model model){
+
         Users findUser = userService.getUserByEmail(user.getEmail());
         if (findUser != null) {
             if (findUser.getPassword().equals(user.getPassword())) {
@@ -61,6 +62,7 @@ public class HomeController {
     @GetMapping("/homePage")
     public String homePage(Model model) {
         // Add any necessary attributes to the model
+
         model.addAttribute("homeUser", new Users());
         return "homePage";  // Return the name of your home page view
     }
