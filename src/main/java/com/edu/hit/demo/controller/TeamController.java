@@ -45,8 +45,8 @@ public class TeamController {
     @GetMapping("backToAutoTeam")
     public String backToAutoTeam(@ModelAttribute("homeUser")Users hUser,
                                  @ModelAttribute("matchedUsers")List<Users> matchedUsers,
-                                 @ModelAttribute("inviters")List<Users> inviters,
-                                 @ModelAttribute("myInvitees") List<Users> myInvitees
+                                 @ModelAttribute("inviters")List<Invitee> inviters,
+                                 @ModelAttribute("myInvitees") List<Invitee> myInvitees
                                  ,
                                  Model model){
         model.addAttribute("inviters",inviters);

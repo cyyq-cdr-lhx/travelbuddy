@@ -72,25 +72,7 @@ public class InviteController {
         userService.updateUser(hUser);
 
 
-        /*
-        if (hUser.getMyInvite() != null) {
-            System.out.println("already have invitation");
-            thInvite = hUser.getMyInvite();
-            List<Invitee> newInvitees = thInvite.getInvitees();
-            newInvitees.add(newInvitee);
-            thInvite.setInvitees(newInvitees);
-        } else {
-            thInvite = new Invite();
-            thInvite.setInviterEmail(hUser.getEmail());
-            thInvite.setInviter(hUser);
-            List<Invitee> newInvitees = new ArrayList<>();
-            newInvitees.add(newInvitee);
-            thInvite.setInvitees(newInvitees);
-        }
 
-
-
-         */
 
         model.addAttribute("homeUser", hUser);
         model.addAttribute("matchedUsers", matchedUsers);
