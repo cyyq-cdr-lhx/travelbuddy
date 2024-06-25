@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Feed</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #77b300 3px solid;
+        }
+        header a, header h1 {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header h1 {
+            float: left;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header nav a {
+            margin-left: 20px;
+        }
+        .feed-section {
+            margin-top: 20px;
+        }
+        .post {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .post img {
+            max-width: 100%;
+            height: auto;
+        }
+        .post h3 {
+            margin: 0;
+        }
+        .post p {
+            margin: 10px 0;
+        }
+        .post .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .post .actions button {
+            padding: 10px;
+            background: #77b300;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .post .actions button:hover {
+            background: #66a300;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Feed</h1>
+        <nav>
+            <a th:href="@{/profile}">Profile</a>
+            <a th:href="@{/upload}">Upload Photo</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div class="feed-section">
+        <div th:each="post : ${posts}" class="post">
+            <h3 th:text="${post.username}"></h3>
+            <p th:text="${post.email}"></p> <!-- 假设你想显示邮箱 -->
+            <p th:text="${post.caption}"></p>
+            <!--
+            <img th:src="@{${post.imageUrl}}" alt="User photo">
+            -->
+            <div class="actions">
+                <a th:href="@{/postDetail/{postId}(postId=${post.id})}" class="btn">查看详情</a>
+                <button th:onclick="'likePost(' + ${post.id} + ')'">Like</button>
+                <button th:onclick="'commentPost(' + ${post.id} + ')'">Comment</button>
+                <span th:text="${post.likes} + ' likes'"></span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function likePost(postId) {
+        fetch(`/like/${postId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                // Update the like count in the DOM
+                document.querySelector(`#post-${postId} .actions span`).textContent = `${data.likes} likes`;
+            });
+    }
+
+    function commentPost(postId) {
+        const comment = prompt("Enter your comment:");
+        if (comment) {
+            fetch(`/comment/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: comment })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Optionally update the comments in the DOM
+                    alert("Comment posted!");
+                });
+        }
+    }
+</script>
+
+</body>
+</html>

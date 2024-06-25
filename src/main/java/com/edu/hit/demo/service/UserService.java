@@ -6,6 +6,7 @@ import com.edu.hit.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 
@@ -30,6 +31,12 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void updateUser(Users user) { userRepository.save(user);   }
+    public Users updateUser(Users user) {
+        return userRepository.save(user);
+    }
 
+    public List<Users> findInvitersByInvitee(Users invitee){
+        return userRepository.findUsersByInvitee(invitee);
+    }
 }
+

@@ -81,7 +81,7 @@
     <div class="container">
         <h1>Home Page</h1>
         <nav>
-            <a th:href="@{/profile}" >个人信息</a>
+            <a th:href="@{/profile(email = ${homeUser.getEmail()})}">个人信息</a>
             <a th:href="@{/travelInterests}">旅游意向</a>
             <a th:href="@{/autoTeam}">自动组队</a>
             <a th:href="@{/routePlanning}">路线规划</a>
@@ -95,6 +95,8 @@
             <h2>User Profile</h2>
             <p><strong>Username:</strong></p>
             <p th:text="${homeUser.username}"></p>
+            <p><strong>Email:</strong></p>
+            <p th:text="${homeUser.email}"></p>
             <p><strong>Gender:</strong> </p>
             <p th:text="${homeUser.gender}"></p>
             <p><strong>Birthdate:</strong> </p>
@@ -112,7 +114,7 @@
             <div class="section">
                 <h2>旅行相册</h2>
                 <div class="buttons">
-                    <a href="#">上传图像</a>
+                    <a th:href="@{/upload(email = ${homeUser.getEmail()})}">上传图像</a>
                 </div>
                 <!-- Photo Gallery content here -->
             </div>

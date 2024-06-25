@@ -9,8 +9,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+@SessionAttributes("homeUser")
 @Controller
 @SessionAttributes("homeUser")
 
@@ -47,6 +51,7 @@ public class HomeController {
 
     @PostMapping("/homePage")
     public String loginCheck(@ModelAttribute Users user, Model model){
+
         Users findUser = userService.getUserByEmail(user.getEmail());
         if (findUser != null) {
             if (findUser.getPassword().equals(user.getPassword())) {
@@ -66,11 +71,20 @@ public class HomeController {
 
 
     @GetMapping("/homePage")
+
     public String homePage(@ModelAttribute("homeUser") Users homeUser, Model model) {
        // model.addAttribute("homeUser", new Users());
         model.addAttribute("homeUser", homeUser);
+
         return "homePage";  // Return the name of your home page view
     }
+
+    public String backToHomePage(@ModelAttribute("homeUser") Users hUser,Model model){
+        model.addAttribute("homeUser",hUser);
+        return "homePage";
+    }
+
+
 
     @PostMapping("/signUpSuc")
     public String SignUpCheck(@ModelAttribute SignUser signUser, HttpSession session, Model model){

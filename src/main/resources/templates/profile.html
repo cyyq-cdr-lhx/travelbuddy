@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Personal Info</title>
-    <!--<link rel="stylesheet" href="../static/form.css">-->
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,39 +68,38 @@
         <div class="profile-details">
             <h2>User Profile</h2>
 
-            <form method="post" th:action="@{/updateProfile}" th:object="${homeUser}">
+            <form method="post" action="/updateProfile" th:object="${homeUser}">
                 <label for="username"><strong>Username:</strong></label>
-                <input type="text" id="username" name="username" th:field="*{username}" th:value="${homeUser.username}" readonly />
+                <input type="text" id="username" name="username" th:field="*{username}" readonly />
                 <br />
 
                 <label for="gender"><strong>Gender:</strong></label>
-                <input type="text" id="gender" name="gender" th:field="*{gender}" th:value="${homeUser.gender}" readonly />
+                <input type="text" id="gender" name="gender" th:field="*{gender}" readonly />
                 <br />
 
                 <label for="birthdate"><strong>Birthdate:</strong></label>
-                <input type="date" id="birthdate" name="birthdate" th:field="*{birthdate}" th:value="${homeUser.birthdate}" readonly />
+                <input type="date" id="birthdate" name="birthdate" th:field="*{birthdate}" readonly />
                 <br />
 
                 <label for="bio"><strong>Bio:</strong></label>
-                <textarea id="bio" name="bio" th:field="*{bio}" th:value="${homeUser.bio}" readonly ></textarea>
+                <textarea id="bio" name="bio" th:field="*{bio}" readonly></textarea>
                 <br />
 
                 <label for="email"><strong>Email:</strong></label>
-                <input type="email" id="email" name="email" th:field="*{email}" th:value="${homeUser.email}" readonly />
+                <input type="email" id="email" name="email" th:field="*{email}" readonly />
                 <br />
 
-                <input type="hidden" name="originalEmail" th:value="${originalEmail}" />
+                <input type="hidden" name="originalEmail" th:value="${homeUser.email}" />
 
                 <button type="submit" id="saveButton" style="display:none;">Save</button>
-
             </form>
             <div class="buttons">
                 <a href="#" id="editButton" onclick="makeEditable()">Edit Profile</a>
             </div>
             <div class="buttons">
-                <a th:href="@{/homePage}">Back to Homepage</a>
+                <a th:href="@{/backToHomePage}">Back to Homepage</a>
             </div>
-            <p th:text="${updateError}" style="color:red"></p> <!-- 显示登录错误信息 -->
+            <p th:text="${updateError}" style="color:red"></p>
         </div>
     </div>
 </div>

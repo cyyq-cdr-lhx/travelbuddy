@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Travel Interests</title>
-    <!--<link rel="stylesheet" href="../static/form.css" th:href="@{/static/form.css}">-->
+    <title>Modify Travel Interests</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,7 +27,6 @@
             border-left: 1px solid #ddd;
             box-shadow: -2px 0 5px rgba(0,0,0,0.1);
         }
-
         form {
             border: none;
         }
@@ -36,7 +34,7 @@
             border: none;
             outline: none;
         }
-        .buttons a, .buttons button {
+        .buttons a {
             display: inline-block;
             padding: 10px 20px;
             background: #77b300;
@@ -67,11 +65,12 @@
 <body>
 <div class="container">
     <div class="main-content">
-        <h2>User Travel Interest</h2>
-        <p><strong>Now, write down your dream trip this year! And we will try our best to find you travel partners!</strong></p>
+        <h2>Modify Travel Interest</h2>
+        <p><strong>You can get the existing travel interest modified</strong></p>
 
-        <form method="post" th:action="@{/travelInterests}" th:object="${userInterest}">
-            <input type="hidden" name="userEmail" th:value ="${userEmail}" />
+        <form method="post" th:action="@{/modifyInterest}" th:object="${interest}">
+            <input type="hidden" name="id" th:field="*{id}" />
+            <input type="hidden" name="userEmail" th:field="*{email}" />
 
             <label for="startCity"><strong>Start city:</strong></label>
             <input type="text" id="startCity" name="startCity" th:field="*{startcity}" />
@@ -90,33 +89,11 @@
             <br/>
 
             <button type="submit" id="saveButton">Save</button>
+
         </form>
         <div class="buttons">
-            <a th:href="@{/backToHomePage}">Back to Homepage</a>
+            <a th:href="@{/travelInterests}">Back to Travel Interests Page</a>
         </div>
-    </div>
-    <div class="sidebar">
-        <h3>Previous Interests</h3>
-        <ul class="interests-list" th:if="${userInterests}">
-            <li th:each="interest : ${userInterests}">
-                <p><strong>Start City:</strong> <span th:text="${interest.startcity}">Start City</span></p>
-                <p><strong>Destination:</strong> <span th:text="${interest.destination}">Destination</span></p>
-                <p><strong>Duration:</strong> <span th:text="${interest.duration}">Duration</span> days</p>
-                <p><strong>Start Date:</strong> <span th:text="${interest.startDay}">Start Date</span></p>
-                <p><strong>End Date:</strong> <span th:text="${interest.endDay}">End Date</span></p>
-
-                <form th:action="@{/modifyInterest}" method="get">
-                    <input type="hidden" name="id" th:value="${interest.id}" />
-                    <button type="submit">Modify</button>
-                </form>
-                <form th:action="@{/deleteInterest}" method="get">
-                    <input type="hidden" name="id" th:value="${interest.id}" />
-                    <button type="submit">Delete</button>
-
-                </form>
-            </li>
-        </ul>
-        <p th:if="${#lists.isEmpty(userInterests)}">No previous interests found.</p>
     </div>
 </div>
 </body>
