@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Auto Team</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
@@ -11,22 +12,28 @@
             padding: 0;
         }
         .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
             width: 80%;
             margin: auto;
-            overflow: hidden;
         }
-        .main-content {
-            flex: 3;
-            padding: 20px;
-        }
-        .sidebar {
-            flex: 1;
+        .section {
             background: #fff;
             padding: 20px;
-            border-left: 1px solid #ddd;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
+        .user-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .user-list li {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
         header {
             background: #333;
             color: #fff;
@@ -47,31 +54,31 @@
             margin-left: 20px;
             text-transform: uppercase;
         }
-        .section {
-            background: #fff;
-            margin-top: 20px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .logout-button {
+            margin-left: auto; /* 将按钮推到右侧 */
+            display: flex;
+            align-items: center;
         }
-        .section h2 {
-            margin-top: 0;
-        }
-        .sub-section {
-            margin-top: 20px;
-        }
-        .sub-section h3 {
-            margin-top: 0;
-        }
-        .user-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .user-list li {
-            background: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
+        .logout-button button {
+            padding: 10px 20px;
+            background-color: #77b300; /* 设置与正文部分按钮相同的背景颜色 */
+            color: #fff;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .logout-button button:hover {
+            background-color: #5c8c00;
+        }
+        .buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #77b300;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -79,17 +86,15 @@
 <header>
     <div class="container">
         <h1>Auto Team</h1>
-        <nav>
-            <a th:href="@{/getProfile}">Profile</a>
-            <a th:href="@{/upload}">Upload Photo</a>
-            <a th:href="@{/feed}">Back to Feed</a>
-        </nav>
+
+        <div class="logout-button">
+            <button onclick="window.location.href='/backToHomePage'">Back To HomePage</button>
+        </div>
     </div>
 </header>
 
 <div class="container">
-
-    <div class="main-content">
+    <div class="section">
         <h2>Matched Users</h2>
         <div th:each="user : ${matchedUsers}" class="user">
             <div>
@@ -98,20 +103,18 @@
                 <div class="buttons">
                     <a th:href="@{/viewUserDetail/{userEmail}(userEmail = ${user.getEmail()})}">查看详情</a>
                 </div>
-
             </div>
-
         </div>
     </div>
 
-    <div class="sidebar">
+    <div class="section">
         <h2>My Invitees</h2>
         <div class="sub-section">
             <h3>Pending</h3>
             <ul class="user-list">
                 <li th:each="invitee : ${myInvitees}" th:if="${invitee.getResponse()== 0}">
                     <p><strong>Username:</strong> <span th:text="${invitee.invitee.username}"></span></p>
-                    <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
+
                 </li>
             </ul>
         </div>
@@ -121,7 +124,7 @@
                 <li th:each="invitee : ${myInvitees}" th:if="${invitee.response == 1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.invitee.username}"></span></p>
                     <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
-                    <p>Contact</p>
+                    <p>Contact your mate by email!</p>
                     <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
                 </li>
             </ul>
@@ -131,14 +134,12 @@
             <ul class="user-list">
                 <li th:each="invitee : ${myInvitees}" th:if="${invitee.response == -1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.invitee.username}"></span></p>
-                    <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
                 </li>
             </ul>
         </div>
     </div>
 
-
-    <div class="sidebar">
+    <div class="section">
         <h2>Received Invitation</h2>
         <div class="sub-section">
             <h3>Pending</h3>
@@ -149,7 +150,6 @@
                         <a th:href="@{/viewInviterDetail/{email}(email= ${invitee.getInviter().getEmail()})}">查看用户详情</a>
                     </div>
                 </li>
-
             </ul>
         </div>
         <div class="sub-section">
@@ -163,7 +163,6 @@
                         <a th:href="@{/viewInviterDetail/{email}(email= ${invitee.getInviter().getEmail()})}">查看用户详情</a>
                     </div>
                 </li>
-
             </ul>
         </div>
         <div class="sub-section">
@@ -172,10 +171,8 @@
                 <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse()== -1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
                 </li>
-
             </ul>
         </div>
-
     </div>
 </div>
 

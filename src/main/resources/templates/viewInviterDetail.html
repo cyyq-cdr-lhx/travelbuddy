@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <title>User Detail</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
         body {
@@ -62,17 +63,19 @@
             margin-top: 0;
         }
         .buttons {
-            text-align: center;
+            display: flex;
+            justify-content: flex-end;
             margin-top: 20px;
         }
-        .buttons a {
+        .buttons a, .buttons button {
             display: inline-block;
             padding: 10px 20px;
             background: #77b300;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
-            margin: 10px 0;
+            margin-left: 10px;
+            cursor: pointer;
         }
         .interests-list {
             list-style-type: none;
@@ -91,12 +94,9 @@
 <header>
     <div class="container">
         <h1>User Detail</h1>
-
         <div class="buttons">
-            <a th:href="@{/acceptInvite(inviterEmail=)}">Accept Invitation</a>
-        </div>
-        <div class="buttons">
-            <a th:href="@{/backToAutoTeam}">back</a>
+            <a th:href="@{/acceptInvite(inviterEmail=${viewUser.email})}">Accept Invitation</a>
+            <a th:href="@{/backToAutoTeam}">Back</a>
         </div>
     </div>
 </header>
@@ -107,21 +107,20 @@
             <h2>User Profile</h2>
             <p><strong>Username:</strong></p>
             <p th:text="${viewUser.username}"></p>
-
-            <p><strong>Gender:</strong> </p>
+            <p><strong>Gender:</strong></p>
             <p th:text="${viewUser.gender}"></p>
-            <p><strong>Birthdate:</strong> </p>
+            <p><strong>Birthdate:</strong></p>
             <p th:text="${viewUser.birthdate}"></p>
             <p><strong>Bio:</strong></p>
             <p th:text="${viewUser.bio}"></p>
         </div>
         <div class="profile-content">
             <div class="section">
-                <h2>我的旅程</h2>
-                <!-- My Journeys content here -->
+                <h2>My Journeys</h2>
+                <!-- Insert My Journeys content here -->
             </div>
             <div class="section">
-                <h2>Travel interests:</h2>
+                <h2>Travel Interests:</h2>
                 <ul class="interests-list" th:if="${vUserInterests}">
                     <li th:each="interest : ${vUserInterests}">
                         <p><strong>Start City:</strong> <span th:text="${interest.startcity}">Start City</span></p>
@@ -129,7 +128,6 @@
                         <p><strong>Duration:</strong> <span th:text="${interest.duration}">Duration</span> days</p>
                         <p><strong>Start Date:</strong> <span th:text="${interest.startDay}">Start Date</span></p>
                         <p><strong>End Date:</strong> <span th:text="${interest.endDay}">End Date</span></p>
-
                         <form th:action="@{/modifyInterest}" method="get">
                             <input type="hidden" name="id" th:value="${interest.id}" />
                             <button type="submit">Modify</button>
@@ -137,13 +135,11 @@
                         <form th:action="@{/deleteInterest}" method="get">
                             <input type="hidden" name="id" th:value="${interest.id}" />
                             <button type="submit">Delete</button>
-
                         </form>
                     </li>
                 </ul>
-                <p th:if="${#lists.isEmpty(vUserInterests)}">No previous interests found.</p>
+                <p th:if="${#lists.isEmpty(vUserInterests)}">No travel interests found.</p>
             </div>
-
         </div>
     </div>
 </div>
