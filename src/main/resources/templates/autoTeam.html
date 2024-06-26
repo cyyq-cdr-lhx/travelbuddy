@@ -15,6 +15,18 @@
             margin: auto;
             overflow: hidden;
         }
+        .main-content {
+            flex: 3;
+            padding: 20px;
+        }
+        .sidebar {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        }
+
         header {
             background: #333;
             color: #fff;
@@ -76,7 +88,8 @@
 </header>
 
 <div class="container">
-    <div class="section">
+
+    <div class="main-content">
         <h2>Matched Users</h2>
         <div th:each="user : ${matchedUsers}" class="user">
             <div>
@@ -91,7 +104,8 @@
 
         </div>
     </div>
-    <div class="section">
+
+    <div class="sidebar">
         <h2>My Invitees</h2>
         <div class="sub-section">
             <h3>Pending</h3>
@@ -108,6 +122,8 @@
                 <li th:each="invitee : ${myInvitees}" th:if="${invitee.response == 1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.invitee.username}"></span></p>
                     <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
+                    <p>Contact</p>
+                    <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
                 </li>
             </ul>
         </div>
@@ -120,6 +136,47 @@
                 </li>
             </ul>
         </div>
+    </div>
+
+
+    <div class="sidebar">
+        <h2>Received Invitation</h2>
+        <div class="sub-section">
+            <h3>Pending</h3>
+            <ul class="user-list">
+                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse()== 0}">
+                    <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
+                    <div class="buttons">
+                        <a th:href="@{/viewInviterDetail/{email}(email= ${invitee.getInviter().getEmail()})}">查看用户详情</a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="sub-section">
+            <h3>Accepted</h3>
+            <ul class="user-list">
+                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse()== 1}">
+                    <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
+                    <p><strong>Email:</strong> <span th:text="${invitee.inviter.email}"></span></p>
+                    <p>Contact</p>
+                    <div class="buttons">
+                        <a th:href="@{/viewInviterDetail/{email}(email= ${invitee.getInviter().getEmail()})}">查看用户详情</a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="sub-section">
+            <h3>Rejected</h3>
+            <ul class="user-list">
+                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse()== -1}">
+                    <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
+                </li>
+
+            </ul>
+        </div>
+
     </div>
 </div>
 
