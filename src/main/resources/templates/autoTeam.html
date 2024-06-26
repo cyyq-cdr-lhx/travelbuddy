@@ -94,7 +94,6 @@
         <div th:each="user : ${matchedUsers}" class="user">
             <div>
                 <h3 th:text="${user.username}"></h3>
-                <p th:text="'Email: ' + ${user.email}"></p>
                 <p th:text="'Bio: ' + ${user.bio}"></p>
                 <div class="buttons">
                     <a th:href="@{/viewUserDetail/{userEmail}(userEmail = ${user.getEmail()})}">查看详情</a>
