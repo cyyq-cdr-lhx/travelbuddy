@@ -26,6 +26,9 @@ public class Users {
 
     private String birthdate;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TravelLog> travelLogs;
+
     //@OneToMany(mappedBy = "inviter",cascade = CascadeType.ALL, orphanRemoval = true)
     @OneToMany(mappedBy = "inviter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Invitee> invitees;
@@ -99,7 +102,13 @@ public class Users {
     public String getPassword() {
         return password;
     }
+    public List<TravelLog> getTravelLogs() {
+        return travelLogs;
+    }
 
+    public void setTravelLogs(List<TravelLog> travelLogs) {
+        this.travelLogs = travelLogs;
+    }
 
 
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Travel Logs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .log {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .log h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>我的旅行日志</h1>
+    <div th:each="log : ${logs}" class="log">
+        <h2 th:text="${log.title}"></h2>
+        <p th:text="${log.content}"></p>
+        <p>创建日期: <span th:text="${log.createdDate}"></span></p>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <a th:href="@{/backToHomePage}" style="text-decoration: none; color: #77b300;">返回主页</a>
+    </div>
+</div>
+</body>
+</html>

@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<Users, Integer>{
     List<Users> findUsersByInvitee(@Param("invitee") Users invitee);
 
 
+
 }
