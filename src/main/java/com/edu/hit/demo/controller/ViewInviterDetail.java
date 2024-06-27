@@ -1,6 +1,7 @@
 package com.edu.hit.demo.controller;
 
 import com.edu.hit.demo.model.Interests;
+import com.edu.hit.demo.model.Invitee;
 import com.edu.hit.demo.model.Users;
 import com.edu.hit.demo.service.InterestService;
 import com.edu.hit.demo.service.UserService;
@@ -16,29 +17,26 @@ import java.util.List;
 
 
 @Controller
-@SessionAttributes({"homeUser","viewUser","matchedUsers","inviters","myInvitees"})
+@SessionAttributes({"homeUser", "matchedUsers", "inviters", "myInvitees"})
 public class ViewInviterDetail {
     @Autowired
     private UserService userService;
     @Autowired
     private InterestService interestService;
+
     @GetMapping("/viewInviterDetail/{email}")
     public String viewInviterDetail(@ModelAttribute("homeUser") Users hUser,
                                     @ModelAttribute("matchedUsers") List<Users> matchedUsers,
-                                    @ModelAttribute("inviters")List<Users> inviters,
-                                    @ModelAttribute("myInvitees") List<Users> myInvitees,
-                                    @PathVariable("email") String vUserEmail, Model model){
+                                    @ModelAttribute("inviters") List<Invitee> inviters,
+                                    @ModelAttribute("myInvitees") List<Invitee> myInvitees,
+                                    @PathVariable("email") String vUserEmail, Model model) {
 
-        System.out.println(vUserEmail);
-        model.addAttribute("homeUser",hUser);
         List<Interests> vUserInterests = interestService.getInterestByEmail(vUserEmail);
         Users vUser = userService.getUserByEmail(vUserEmail);
-        model.addAttribute("viewUser",vUser);
-        model.addAttribute("inviters",inviters);
-        model.addAttribute("myInvitees",myInvitees);
-        model.addAttribute("matchedUsers",matchedUsers);
+
+        model.addAttribute("viewUser", vUser);
         model.addAttribute("vUserInterests", vUserInterests);
         return "viewInviterDetail";
-
     }
 }
+

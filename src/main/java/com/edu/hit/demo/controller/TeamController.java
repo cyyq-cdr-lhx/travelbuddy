@@ -35,6 +35,7 @@ public class TeamController {
         List<Invitee> inviters = inviteService.findAllByInvitee(hUser);
 
         List<Invitee> myInvitees =inviteService.findAllByInviter(hUser);
+        System.out.println(hUser.getEmail());
 
         model.addAttribute("matchedUsers", matchedUsers);
         model.addAttribute("inviters",inviters);

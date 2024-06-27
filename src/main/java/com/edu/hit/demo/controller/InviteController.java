@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"homeUser", "matchedUsers","inviters","myInvitees"})
+@SessionAttributes({"homeUser", "matchedUsers","inviters","myInvitees","viewUser","invitee"})
 public class InviteController {
     @Autowired
     private InviteService inviteService;
@@ -81,5 +81,6 @@ public class InviteController {
 
         return "sendInviteSuc";
     }
+
 
 }

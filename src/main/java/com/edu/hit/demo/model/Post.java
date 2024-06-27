@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 public class Post {
 
+    /*
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,62 +36,51 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-// Getters and Setters
+     */
+    /*保存上传图片的用户邮箱、用户名
+     *图片标题、点赞数、一对多映射评论
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    private String email;
+
+    private String username;
+    private String caption;
+
+    private int likes = 0;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+// Getters and Setters
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-    public String getUsername() {
-        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getCaption() {
-        return caption;
-    }
-
     public void setCaption(String caption) {
         this.caption = caption;
     }
 
-    public List<Image> getImageData() {
-        return imageData;
-    }
-
-    public void setImageData(List<Image> imageData) {
-        this.imageData = imageData;
-    }
-
-
-    public int getLikes() {
-        return likes;
-    }
 
     public void setLikes(int likes) {
         this.likes = likes;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+
+
 
 }

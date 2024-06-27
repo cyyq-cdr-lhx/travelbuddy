@@ -88,9 +88,9 @@
 
 <div class="container">
     <div class="feed-section">
-        <div th:each="post : ${posts}" class="post">
+        <div th:each="post : ${posts}" class="post2">
             <h3 th:text="${post.username}"></h3>
-            <p th:text="${post.email}"></p> <!-- 假设你想显示邮箱 -->
+            <p th:text="${post.email}"></p>
             <p th:text="${post.caption}"></p>
             <!--
             <img th:src="@{${post.imageUrl}}" alt="User photo">

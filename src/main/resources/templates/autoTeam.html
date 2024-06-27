@@ -55,13 +55,13 @@
             text-transform: uppercase;
         }
         .logout-button {
-            margin-left: auto; /* 将按钮推到右侧 */
+            margin-left: auto;
             display: flex;
             align-items: center;
         }
         .logout-button button {
             padding: 10px 20px;
-            background-color: #77b300; /* 设置与正文部分按钮相同的背景颜色 */
+            background-color: #77b300;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -86,12 +86,14 @@
 <header>
     <div class="container">
         <h1>Auto Team</h1>
-
         <div class="logout-button">
             <button onclick="window.location.href='/backToHomePage'">Back To HomePage</button>
         </div>
     </div>
 </header>
+<div>
+    <h1 th:text="${homeUser.email}"></h1>
+</div>
 
 <div class="container">
     <div class="section">
@@ -112,9 +114,8 @@
         <div class="sub-section">
             <h3>Pending</h3>
             <ul class="user-list">
-                <li th:each="invitee : ${myInvitees}" th:if="${invitee.getResponse()== 0}">
+                <li th:each="invitee : ${myInvitees}" th:if="${invitee.getResponse() == 0}">
                     <p><strong>Username:</strong> <span th:text="${invitee.invitee.username}"></span></p>
-
                 </li>
             </ul>
         </div>
@@ -144,10 +145,10 @@
         <div class="sub-section">
             <h3>Pending</h3>
             <ul class="user-list">
-                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse()== 0}">
+                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse() == 0}">
                     <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
                     <div class="buttons">
-                        <a th:href="@{/viewInviterDetail/{email}(email= ${invitee.getInviter().getEmail()})}">查看用户详情</a>
+                        <a th:href="@{/viewInviterDetail/{email}(email=${invitee.inviter.email})}">查看用户详情</a>
                     </div>
                 </li>
             </ul>
@@ -155,12 +156,12 @@
         <div class="sub-section">
             <h3>Accepted</h3>
             <ul class="user-list">
-                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse()== 1}">
+                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse() == 1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
                     <p><strong>Email:</strong> <span th:text="${invitee.inviter.email}"></span></p>
                     <p>Contact</p>
                     <div class="buttons">
-                        <a th:href="@{/viewInviterDetail/{email}(email= ${invitee.getInviter().getEmail()})}">查看用户详情</a>
+                        <a th:href="@{/viewInviterDetail/{email}(email=${invitee.inviter.email})}">查看用户详情</a>
                     </div>
                 </li>
             </ul>
@@ -168,7 +169,7 @@
         <div class="sub-section">
             <h3>Rejected</h3>
             <ul class="user-list">
-                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse()== -1}">
+                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse() == -1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
                 </li>
             </ul>

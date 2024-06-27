@@ -28,4 +28,8 @@ public class InviteService {
     public List<Invitee> findAllByInviter(Users inviter){
         return inviteeRepository.findAllByInviter(inviter);
     }
+
+    public Invitee findAllByInviterAndInvitee(Users inviter,Users invitee){
+        return inviteeRepository.findAllByInviterAndInvitee(inviter,invitee);
+    }
 }

@@ -95,7 +95,7 @@
     <div class="container">
         <h1>User Detail</h1>
         <div class="buttons">
-            <a th:href="@{/acceptInvite(inviterEmail=${viewUser.email})}">Accept Invitation</a>
+            <a th:href="@{/acceptInvite}">Accept Invitation</a>
             <a th:href="@{/backToAutoTeam}">Back</a>
         </div>
     </div>
@@ -128,14 +128,7 @@
                         <p><strong>Duration:</strong> <span th:text="${interest.duration}">Duration</span> days</p>
                         <p><strong>Start Date:</strong> <span th:text="${interest.startDay}">Start Date</span></p>
                         <p><strong>End Date:</strong> <span th:text="${interest.endDay}">End Date</span></p>
-                        <form th:action="@{/modifyInterest}" method="get">
-                            <input type="hidden" name="id" th:value="${interest.id}" />
-                            <button type="submit">Modify</button>
-                        </form>
-                        <form th:action="@{/deleteInterest}" method="get">
-                            <input type="hidden" name="id" th:value="${interest.id}" />
-                            <button type="submit">Delete</button>
-                        </form>
+
                     </li>
                 </ul>
                 <p th:if="${#lists.isEmpty(vUserInterests)}">No travel interests found.</p>
