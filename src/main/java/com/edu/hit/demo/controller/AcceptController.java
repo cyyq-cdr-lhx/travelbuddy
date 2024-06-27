@@ -1,12 +1,14 @@
 package com.edu.hit.demo.controller;
 
 import com.edu.hit.demo.model.Users;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
+@Controller
 @SessionAttributes({"homeUser", "matchedUsers","inviters","myInvitees","viewUser","invitee"})
 public class AcceptController {
     @GetMapping("/acceptInvite")
