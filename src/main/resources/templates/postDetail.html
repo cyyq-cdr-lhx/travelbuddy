@@ -17,6 +17,20 @@
             margin: 5px;
             box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
         }
+        .photos {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .photos img {
+            width: 150px;
+            height: 150px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -24,7 +38,7 @@
     <div class="container">
         <h1>Post Detail</h1>
         <nav>
-            <a th:href="@{/getProfile}">Profile</a>
+            <a th:href="@{/profile}">Profile</a>
             <a th:href="@{/upload}">Upload Photo</a>
             <a th:href="@{/feed}">Back to Feed</a>
         </nav>
@@ -38,11 +52,11 @@
             <p th:text="${post.email}"></p>
             <p th:text="${post.caption}"></p>
             <div class="actions">
-                <div th:each="image : ${images}">
-                    <img th:src="${image}" alt="User photo">
-                    <a th:href="${image}">图片详情</a>
+                <div class="photos">
+                    <div th:each="image : ${images}">
+                        <img th:src="${image}" alt="User Photo">
+                    </div>
                 </div>
-
                 <span th:text="${post.likes} + ' likes'"></span>
             </div>
         </div>

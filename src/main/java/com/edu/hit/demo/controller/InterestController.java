@@ -19,8 +19,8 @@ import java.util.List;
 @SessionAttributes("homeUser")
 @Controller
 public class InterestController {
-    @Autowired
-    private InterestRepository interestRepository;
+    //@Autowired
+    //private InterestRepository interestRepository;
 
     @Autowired
     private InterestService interestService;

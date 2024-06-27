@@ -11,13 +11,9 @@ import java.util.Date;
 @Entity
 public class Interests {
     @Id
-<<<<<<< HEAD
-=======
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
->>>>>>> ac97c35dd00386906c969a05187f7401c06c09b4
     private String email;
 
     private String startcity;
@@ -26,15 +22,13 @@ public class Interests {
     private Integer duration;//???
     private String startDay;
     private String endDay;
-<<<<<<< HEAD
-=======
 
     public Integer getId(){return id;}
     public void setId(Integer id){ this.id = id;}
 
     public String getEmail(){return email;}
     public void setEmail(String email){this.email = email;}
->>>>>>> ac97c35dd00386906c969a05187f7401c06c09b4
+
     public String getStartcity() {  return startcity; }
 
     public void setStartcity(String startcity) {this.startcity = startcity;  }
@@ -60,8 +54,6 @@ public class Interests {
     public void setEndDay(String endDay) {  this.endDay = endDay;    }
 
 
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> ac97c35dd00386906c969a05187f7401c06c09b4
+

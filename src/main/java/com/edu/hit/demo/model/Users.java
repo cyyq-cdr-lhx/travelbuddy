@@ -22,13 +22,7 @@ public class Users {
     private String username;
     private String email;
     private String gender;
-<<<<<<< HEAD
 
-
-    private String birthdate;
-    private String bio;
-=======
->>>>>>> ac97c35dd00386906c969a05187f7401c06c09b4
 
 
     private String birthdate;
@@ -107,24 +101,10 @@ public class Users {
         return password;
     }
 
-<<<<<<< HEAD
-    public void setPassword(String password){
-        this.password = password;
-    }
-    public String getGender() {  return gender;    }
 
-    public void setGender(String gender) {this.gender = gender;    }
-
-    public String getBirthdate() { return birthdate;    }
-
-    public void setBirthdate(String birthdate) { this.birthdate = birthdate;    }
-
-    public String getBio() {   return bio;    }
-
-    public void setBio(String bio) {   this.bio = bio;  }
+    
 
 }
-=======
 
 
 
@@ -136,5 +116,6 @@ public class Users {
 
 
 
-}
->>>>>>> ac97c35dd00386906c969a05187f7401c06c09b4
+
+
+

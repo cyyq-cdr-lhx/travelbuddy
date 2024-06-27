@@ -7,7 +7,9 @@ import lombok.Setter;
 @Getter
 @Entity
 public class Comment {
-
+/*保存评论id 内容 用户邮箱
+* 多对一映射图片
+*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +20,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Post post;
+    private Post2 post;
 
     public Comment() {}
 
@@ -28,31 +30,17 @@ public class Comment {
 
     // Getters and Setters
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getText() {
-        return text;
     }
 
     public void setText(String text) {
         this.text = text;
     }
 
-    public String getEmail(){return email;}
-
     public void setEmail(String email){this.email = email;}
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
+    public void setPost(Post2 post) {
         this.post = post;
     }
 }
