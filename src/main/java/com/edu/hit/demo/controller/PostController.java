@@ -130,9 +130,9 @@ public class PostController {
         model.addAttribute("homeUser",hUser);
         return "feed";
     }
-    @PostMapping("/like/{postId}")
-    @ResponseBody
-    public Map<String, Object> likePost(@PathVariable Long postId,
+    @GetMapping("/like/{postId}")
+    //@ResponseBody
+    public String likePost(@PathVariable Long postId,
                                         @ModelAttribute("homeUser") Users hUser
     ) {
         Post findpost = postService.getPostById(postId);
@@ -152,7 +152,8 @@ public class PostController {
         //返回该post点赞总数
         Integer cnt = likeService.countLike(postId);
         findpost.setLikes(cnt);
-        return Collections.singletonMap("likes",cnt);
+        return "redirect:/feed";
+        //return Collections.singletonMap("likes",cnt);
     }
 
     @PostMapping("/comment/{postid}")
