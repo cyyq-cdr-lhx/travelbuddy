@@ -10,4 +10,6 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
 
     @Query("SELECT COUNT(l) FROM Likes l WHERE l.postId = :postId")
     Integer countByPostId(@Param("postId") Long postId);
+
 }
+

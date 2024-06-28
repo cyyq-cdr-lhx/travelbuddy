@@ -4,6 +4,11 @@
     <title>Upload Photos</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
+
+
+
+
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -11,9 +16,17 @@
             padding: 0;
         }
         .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
             width: 80%;
             margin: auto;
-            overflow: hidden;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
         header {
             background: #333;
@@ -21,12 +34,6 @@
             padding-top: 30px;
             min-height: 70px;
             border-bottom: #77b300 3px solid;
-        }
-        header a, header h1 {
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 16px;
         }
         header h1 {
             float: left;
@@ -36,51 +43,65 @@
             margin-top: 10px;
         }
         header nav a {
+            color: #fff;
+            text-decoration: none;
             margin-left: 20px;
+            text-transform: uppercase;
         }
-        .upload-section {
-            margin-top: 20px;
+        .profile-section {
+            display: flex;
+            justify-content: center;
+        }
+        .profile-details {
+            width: 100%;
             padding: 20px;
             background: #fff;
             box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
         }
-        .upload-section h2 {
-            margin-top: 0;
+        form {
+            border: none;
         }
-        .upload-section form {
-            display: flex;
-            flex-direction: column;
-        }
-        .upload-section input, .upload-section textarea {
-            margin-bottom: 10px;
+        input, textarea {
+            border: 1px solid #ddd;
             padding: 10px;
-            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 16px;
             border-radius: 5px;
         }
-        .upload-section button {
-            padding: 10px;
-            background: #77b300;
+        .logout-button {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        .logout-button button {
+            padding: 10px 20px;
+            background-color: #77b300;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .upload-section button:hover {
-            background: #66a300;
+        .logout-button button:hover {
+            background-color: #5c8c00;
         }
-        .preview {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-        .preview img {
-            width: 150px;
-            height: 150px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            object-fit: cover;
-            border: 1px solid #ccc;
+        .buttons a, #saveButton {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #77b300;
+            color: #fff;
+            text-decoration: none;
             border-radius: 5px;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        #saveButton {
+            border: none;
+            cursor: pointer;
+        }
+        .buttons a:hover, #saveButton:hover {
+            background-color: #5c8c00;
         }
     </style>
 </head>
@@ -88,10 +109,9 @@
 <header>
     <div class="container">
         <h1>Upload Photos</h1>
-        <nav>
-            <a th:href="@{/profile}">Profile</a>
-            <a th:href="@{/feed}">Feed</a>
-        </nav>
+        <div class="logout-button">
+            <button onclick="window.location.href='/backToHomePage'">Back To HomePage</button>
+        </div>
     </div>
 </header>
 
@@ -108,7 +128,8 @@
             <a th:href="@{/backToHomePage}">Back to Homepage</a>
         </div>
         <div class="buttons">
-            <a th:href="@{/feed}">View all posts </a>
+            <a th:href="@{/feed}">View my posts </a>
+            <a th:href="@{/allPost}">View all posts </a>
         </div>
     </div>
 </div>

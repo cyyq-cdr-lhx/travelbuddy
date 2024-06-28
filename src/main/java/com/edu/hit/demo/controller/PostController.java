@@ -25,7 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Controller
-@SessionAttributes({"homeUser"})
+@SessionAttributes({"homeUser","flag"})
 public class PostController {
     @Autowired
     private PostService postService;
@@ -40,7 +40,7 @@ public class PostController {
     @GetMapping("/upload")
     public  String showUpLoadFormz(@ModelAttribute("homeUser") Users hUser,
                                    Model model
-                                   ){
+    ){
         model.addAttribute("homeUser",hUser);
         return "upload";
     }
@@ -84,19 +84,36 @@ public class PostController {
         postRepository.save(post);
         model.addAttribute("message", "Successfully uploaded images!");
         model.addAttribute("homeUser",findUser);
-        List<Post> posts = postService.getAllPosts();
-        model.addAttribute("posts", posts);
+        model.addAttribute("flag","feed");
+        //List<Post> posts = postService.getAllPosts();
+        //model.addAttribute("posts", posts);
         return "redirect:/feed";
     }
 
     @GetMapping("/feed")
+<<<<<<< HEAD
     public String showProfile(@ModelAttribute("homeUser") Users hUser, Model model) {
+=======
+    public String showMyPost(@ModelAttribute("homeUser") Users hUser, Model model) {
+>>>>>>> master
         List<Post> posts = postService.findPostsByEmail(hUser.getEmail());
 
         model.addAttribute("posts", posts); // 确保正确添加数据到模型中
         model.addAttribute("homeUser",hUser);
+        model.addAttribute("flag","feed");
         return "feed";
 
+<<<<<<< HEAD
+=======
+    }
+    @GetMapping("/allPost")
+    public String showAllPost(@ModelAttribute("homeUser") Users hUser, Model model) {
+        List<Post> posts = postService.getAllPost();
+        model.addAttribute("posts", posts);
+        model.addAttribute("homeUser",hUser);
+        model.addAttribute("flag","allpost");
+        return "allPost";
+>>>>>>> master
     }
     @GetMapping("/postDetail/{postId}")
     public String viewPostDetail(@ModelAttribute("homeUser") Users hUser,
@@ -119,12 +136,17 @@ public class PostController {
 
 
     }
+<<<<<<< HEAD
+=======
+    //用户可以删除自己的post
+>>>>>>> master
     @GetMapping("/deletePost/{postId}")
     public String deletePost(@ModelAttribute("homeUser") Users hUser,
                              @PathVariable("postId") Long postId,
                              Model model){
         postService.deletePost(postId);
         List<Post> posts = postService.findPostsByEmail(hUser.getEmail());
+<<<<<<< HEAD
 
         model.addAttribute("posts", posts); // 确保正确添加数据到模型中
         model.addAttribute("homeUser",hUser);
@@ -153,6 +175,45 @@ public class PostController {
         Integer cnt = likeService.countLike(postId);
         findpost.setLikes(cnt);
         return Collections.singletonMap("likes",cnt);
+=======
+
+        model.addAttribute("posts", posts); // 确保正确添加数据到模型中
+        model.addAttribute("homeUser",hUser);
+        model.addAttribute("flag","feed");
+        return "feed";
+    }
+    @GetMapping("/like/{postId}")
+    //@ResponseBody
+    public String likePost(@PathVariable("postId") Long postId,
+                           @ModelAttribute("homeUser") Users hUser,Model model)
+    {
+        Post findpost = postService.getPostById(postId);
+        Likes findLike = likeService.findByPostidAndEmail(postId,hUser.getEmail());
+        //该用户已经给该post点过赞则删除
+        if(findLike!=null){
+            likeService.deletelike(findLike.getId());
+            postService.notLikePost(findpost);
+        }else {
+            //未查到记录，则新增点赞
+            Likes like = new Likes();
+            like.setPostId(postId);
+            like.setEmail(hUser.getEmail());
+            likeService.saveLike(like);
+            postService.likePost(findpost);
+        }
+        //返回该post点赞总数
+        Integer cnt = likeService.countLike(postId);
+        findpost.setLikes(cnt);
+
+        String flag = Objects.requireNonNull(model.getAttribute("flag")).toString();
+        if(flag.equals("allpost")){
+            model.addAttribute("flag","allpost");
+            return "redirect:/allPost" ;
+        }
+        model.addAttribute("flag","feed");
+        return "redirect:/feed" ;
+
+>>>>>>> master
     }
 
     @PostMapping("/comment/{postid}")
@@ -170,4 +231,3 @@ public class PostController {
 
 
 }
-

@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>路径规划</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>All Posts</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,16 +43,7 @@
             margin-left: 20px;
             text-transform: uppercase;
         }
-        .profile-section {
-            display: flex;
-            justify-content: center;
-        }
-        .profile-details {
-            width: 100%;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-        }
+
         form {
             border: none;
         }
@@ -65,11 +55,7 @@
             font-size: 16px;
             border-radius: 5px;
         }
-        .logout-button {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-        }
+
         .logout-button button {
             padding: 10px 20px;
             background-color: #77b300;
@@ -92,41 +78,47 @@
             margin: 10px 0;
             transition: background-color 0.3s;
         }
-        #saveButton {
-            border: none;
-            cursor: pointer;
-        }
         .buttons a:hover, #saveButton:hover {
             background-color: #5c8c00;
         }
     </style>
 </head>
 <body>
-<header>
-    <div class="container">
-        <h1>Route planning</h1>
-        <div class="logout-button">
-            <button onclick="window.location.href='/backToHomePage'">Back To HomePage</button>
-        </div>
-    </div>
-</header>
 <div class="container">
     <div class="section">
-        <h1>规划你的路线</h1>
-        <form th:action="@{/route/routePlan}" method="post">
-            <div>
-                <label for="start">起始地:</label>
-                <input type="text" id="start" name="start" required />
+        <div th:each="post : ${posts}" class="post">
+            <h3 th:text="${post.username}"></h3>
+            <p th:text="${post.email}"></p>
+            <p th:text="${post.caption}"></p>
+            <div class="actions">
+                <a th:href="@{/postDetail/{postId}(postId=${post.id})}" class="btn">查看详情</a>
+                <a th:href="@{/like/{postId}(postId=${post.id})}" class="btn">Like</a>
+                <!--                <button th:onclick="'likePost(' + ${post.id} + ')'">Like</button>-->
+                <button th:onclick="'commentPost(' + ${post.id} + ')'">Comment</button>
+                <span th:text="${post.likes} + ' likes'"></span>
+
             </div>
-            <div>
-                <label for="destination">目的地:</label>
-                <input type="text" id="destination" name="destination" required />
-            </div>
-            <div>
-                <button type="submit">规划路线</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+<script>
+
+    function commentPost(postId) {
+        const comment = prompt("Enter your comment:");
+        if (comment) {
+            fetch(`/comment/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: comment })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert("Comment posted!");
+                });
+        }
+    }
+</script>
 </body>
 </html>

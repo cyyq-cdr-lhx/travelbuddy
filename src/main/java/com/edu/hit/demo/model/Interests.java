@@ -14,6 +14,7 @@ public class Interests {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     private String email;
 
     private String startcity;
@@ -28,7 +29,6 @@ public class Interests {
 
     public String getEmail(){return email;}
     public void setEmail(String email){this.email = email;}
-
     public String getStartcity() {  return startcity; }
 
     public void setStartcity(String startcity) {this.startcity = startcity;  }
@@ -54,6 +54,4 @@ public class Interests {
     public void setEndDay(String endDay) {  this.endDay = endDay;    }
 
 
-
 }
-

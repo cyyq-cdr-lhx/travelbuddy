@@ -10,6 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+
 @Service
 public class InterestService {
     @Autowired
@@ -24,5 +29,6 @@ public class InterestService {
     public Interests getInterestById(Integer id){
         return  interestRepository.findById(id);
     }
-}
 
+
+}

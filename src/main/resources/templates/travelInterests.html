@@ -7,19 +7,97 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
         }
         .container {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
             width: 80%;
             margin: auto;
-            overflow: hidden;
         }
-        .main-content {
-            flex: 3;
+        .section {
+            background: #fff;
             padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #77b300 3px solid;
+        }
+        header h1 {
+            float: left;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            text-transform: uppercase;
+        }
+        .profile-section {
+            display: flex;
+            justify-content: center;
+        }
+        .profile-details {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        form {
+            border: none;
+        }
+        input, textarea {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .logout-button {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        .logout-button button {
+            padding: 10px 20px;
+            background-color: #77b300;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .logout-button button:hover {
+            background-color: #5c8c00;
+        }
+        .buttons a, #saveButton {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #77b300;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        #saveButton {
+            border: none;
+            cursor: pointer;
+        }
+        .buttons a:hover, #saveButton:hover {
+            background-color: #5c8c00;
         }
         .sidebar {
             flex: 1;
@@ -36,21 +114,7 @@
             border: none;
             outline: none;
         }
-        .buttons a, .buttons button {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #77b300;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        #saveButton {
-            background: #77b300;
-            border-radius: 5px;
-            margin: 10px 0;
-            padding: 10px 20px;
-        }
+
         .interests-list {
             list-style-type: none;
             padding: 0;
@@ -65,9 +129,17 @@
     </style>
 </head>
 <body>
+<header>
+    <div class="container">
+        <h1>User Travel Interest</h1>
+        <div class="logout-button">
+            <button onclick="window.location.href='/backToHomePage'">Back To HomePage</button>
+        </div>
+    </div>
+</header>
 <div class="container">
     <div class="main-content">
-        <h2>User Travel Interest</h2>
+
         <p><strong>Now, write down your dream trip this year! And we will try our best to find you travel partners!</strong></p>
 
         <form method="post" th:action="@{/travelInterests}" th:object="${userInterest}">

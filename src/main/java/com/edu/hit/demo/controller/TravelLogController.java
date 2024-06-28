@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -37,8 +38,13 @@ public class TravelLogController {
         if (user == null) {
             return "redirect:/";
         }
-        TravelLog log = new TravelLog(title, content, LocalDateTime.now(), user);
+
+        LocalDateTime time = LocalDateTime.now();
+        TravelLog log = new TravelLog(title, content, time, user);
+        List<TravelLog> logs = new ArrayList<>();
+        logs.add(log);
         travelLogRepository.save(log);
+        model.addAttribute("logs",logs);
         return "myLog";
     }
 

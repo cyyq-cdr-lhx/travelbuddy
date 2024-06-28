@@ -14,4 +14,6 @@ public class LikesService {
     public Integer countLike(Long postid){return likeRepository.countByPostId(postid);}
     public void deletelike(Long id){likeRepository.deleteById(id);}
     public  void saveLike(Likes like){likeRepository.save(like);}
+
 }
+
