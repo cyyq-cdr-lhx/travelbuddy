@@ -56,6 +56,7 @@ public class PostService {
     public List<Comment> findCommentsByEmail(String email){
         return commentRepository.findByEmail(email);
     }
+    public List<Post> getAllPost(){return postRepository.findAllByOrderByLikesDesc();}
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);
