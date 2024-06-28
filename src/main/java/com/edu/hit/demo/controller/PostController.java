@@ -119,6 +119,16 @@ public class PostController {
 
 
     }
+
+    @GetMapping("/backToPostDetail")
+    public String backToPostDetail(@ModelAttribute("homeUser") Users hUser,
+                                   Model model){
+        List<Post> posts = postService.findPostsByEmail(hUser.getEmail());
+
+        model.addAttribute("posts", posts); // 确保正确添加数据到模型中
+        model.addAttribute("homeUser",hUser);
+        return "feed";
+    }
     @GetMapping("/deletePost/{postId}")
     public String deletePost(@ModelAttribute("homeUser") Users hUser,
                              @PathVariable("postId") Long postId,
