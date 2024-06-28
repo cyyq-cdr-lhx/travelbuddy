@@ -85,13 +85,26 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .success-message {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-<div class="buttons">
-    <a th:href="@{/backToAutoTeam}">back</a>
-
+<div class="container">
+    <header>
+        <div class="container">
+            <h1>Send Invite Successfully</h1>
+        </div>
+    </header>
+    <div class="success-message">
+        <p>Your message has been sent successfully!</p>
+    </div>
+    <div class="buttons">
+        <a th:href="@{/backToAutoTeam}">Back</a>
+    </div>
 </div>
-
 </body>
 </html>
