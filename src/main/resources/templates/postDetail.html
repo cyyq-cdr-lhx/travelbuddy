@@ -31,6 +31,25 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .comment-section {
+            margin-top: 20px;
+            padding: 20px;
+            border-top: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .comment-section .comment {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .comment-section .comment p {
+            margin: 0;
+            padding: 5px 0;
+        }
+        .comment-section .comment p.email {
+            font-size: 0.9em;
+            color: #777;
+        }
     </style>
 </head>
 <body>
@@ -58,6 +77,12 @@
                     </div>
                 </div>
                 <span th:text="${post.likes} + ' likes'"></span>
+            </div>
+        </div>
+        <div class="comment-section">
+            <div th:each="comment : ${comments}" class="comment">
+                <p th:text="${comment.text}"></p>
+                <p class="email" th:text="${comment.email}"></p>
             </div>
         </div>
     </div>

@@ -1,16 +1,17 @@
 package com.edu.hit.demo.controller;
 
 
+import com.edu.hit.demo.model.Comment;
+import com.edu.hit.demo.model.Likes;
 import com.edu.hit.demo.model.Post;
 import com.edu.hit.demo.model.Users;
 import com.edu.hit.demo.repository.PostRepository;
 import com.edu.hit.demo.service.FileStorageService;
+import com.edu.hit.demo.service.LikesService;
 import com.edu.hit.demo.service.PostService;
 import com.edu.hit.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,8 @@ public class PostController {
     private FileStorageService fileStorageService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private LikesService likeService;
     @GetMapping("/upload")
     public  String showUpLoadFormz(@ModelAttribute("homeUser") Users hUser,
                                    Model model
@@ -52,8 +55,6 @@ public class PostController {
                                Model model) {
         //每个用户的图片保存在一个单独的文件夹中
         //文件夹内图片以caption命名
-        List<String> fileNames = new ArrayList<>();
-
         for (MultipartFile image : images) {
             if (!image.isEmpty()) {
                 try {
@@ -64,14 +65,9 @@ public class PostController {
                         dir.mkdirs();
                     }
 
-                    // Save the uploaded file to the user's directory
-                    //String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-                    //Path path = Paths.get(userDir + File.separator + fileName);
                     Path path = Paths.get(userDir+File.separator+caption);
                     Files.write(path, image.getBytes());
-
-                    //fileNames.add(fileName);
-                    fileNames.add(caption);
+                    //fileNames.add(caption);
                 } catch (IOException e) {
                     e.printStackTrace();
                     model.addAttribute("message", "Failed to upload '" + caption + "'!");
@@ -81,12 +77,12 @@ public class PostController {
         }
         Users findUser = userService.getUserByEmail(email);
         Post post = new Post();
-        post.setLikes(0);
+        post.setCaption(caption);
         post.setUsername(findUser.getUsername());
         post.setEmail(findUser.getEmail());
+        post.setLikes(0);
         postRepository.save(post);
         model.addAttribute("message", "Successfully uploaded images!");
-        model.addAttribute("files", fileNames);
         model.addAttribute("homeUser",findUser);
         List<Post> posts = postService.getAllPosts();
         model.addAttribute("posts", posts);
@@ -95,10 +91,12 @@ public class PostController {
 
     @GetMapping("/feed")
     public String showProfile(@ModelAttribute("homeUser") Users hUser, Model model) {
-        List<Post> posts = postService.findAllOrderByLikesDesc();
+        List<Post> posts = postService.findPostsByEmail(hUser.getEmail());
+
         model.addAttribute("posts", posts); // 确保正确添加数据到模型中
         model.addAttribute("homeUser",hUser);
         return "feed";
+
     }
     @GetMapping("/postDetail/{postId}")
     public String viewPostDetail(@ModelAttribute("homeUser") Users hUser,
@@ -108,63 +106,68 @@ public class PostController {
         String userDir = uploadDir + File.separator + hUser.getEmail();
         File dir = new File(userDir);
         List<String> images = new ArrayList<>();
-
         if (dir.exists()) {
-            for (File file : dir.listFiles()) {
-                images.add("/uploads/" + hUser.getEmail() + "/" + file.getName());
-            }
+            images.add("/uploads/" + hUser.getEmail() + "/" + post.getCaption());
         }
-        boolean liked = post.getLikedBy().contains(hUser.getEmail());
-        model.addAttribute("liked", liked);
+
         model.addAttribute("images", images);
         model.addAttribute("homeUser",hUser);
         model.addAttribute("post",post);
-        //model.addAttribute("images",imageUtils);
+        List<Comment> comments = postService.getCommentsByPost(post);
+        model.addAttribute("comments",comments);
         return "postDetail";
 
 
     }
+    @GetMapping("/deletePost/{postId}")
+    public String deletePost(@ModelAttribute("homeUser") Users hUser,
+                             @PathVariable("postId") Long postId,
+                             Model model){
+        postService.deletePost(postId);
+        List<Post> posts = postService.findPostsByEmail(hUser.getEmail());
 
-    @PostMapping("/like/{id}")
+        model.addAttribute("posts", posts); // 确保正确添加数据到模型中
+        model.addAttribute("homeUser",hUser);
+        return "feed";
+    }
+    @PostMapping("/like/{postId}")
     @ResponseBody
-    public Map<String, Object> likePost(@PathVariable Long id) {
-        int likes = postService.likePost(id);
-        return Collections.singletonMap("likes", likes);
+    public Map<String, Object> likePost(@PathVariable Long postId,
+                                        @ModelAttribute("homeUser") Users hUser
+                                        ) {
+        Post findpost = postService.getPostById(postId);
+        Likes findLike = likeService.findByPostidAndEmail(postId,hUser.getEmail());
+        //该用户已经给该post点过赞则删除
+        if(findLike!=null){
+            likeService.deletelike(findLike.getId());
+            postService.notLikePost(findpost);
+        }else {
+            //未查到记录，则新增点赞
+            Likes like = new Likes();
+            like.setPostId(postId);
+            like.setEmail(hUser.getEmail());
+            likeService.saveLike(like);
+            postService.likePost(findpost);
+        }
+        //返回该post点赞总数
+        Integer cnt = likeService.countLike(postId);
+        findpost.setLikes(cnt);
+        return Collections.singletonMap("likes",cnt);
     }
 
-    @PostMapping("/comment/{id}")
+    @PostMapping("/comment/{postid}")
     @ResponseBody
-    public Map<String, Object> commentPost(@PathVariable Long id, @RequestBody Map<String, String> payload) {
-        postService.commentPost(id, payload.get("text"));
+    public Map<String, Object> commentPost(@PathVariable Long postid, @RequestBody Map<String, String> payload,
+                                           Model model) {
+        //给该post增加评论
+        postService.commentPost(postid, payload.get("text"));
+
+
         return Collections.singletonMap("status", "success");
     }
 
 
-    @PostMapping("/{postId}/like")
-    public ResponseEntity<Map<String, Object>> likePost(@PathVariable Long postId, @RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        Optional<Post> optionalPost = postRepository.findById(postId);
-        if (optionalPost.isPresent()) {
-            Post post = optionalPost.get();
-            boolean liked;
-            if (post.getLikedBy().contains(email)) {
-                post.getLikedBy().remove(email);
-                post.setLikes(post.getLikes() - 1);
-                liked = false;
-            } else {
-                post.getLikedBy().add(email);
-                post.setLikes(post.getLikes() + 1);
-                liked = true;
-            }
-            postRepository.save(post);
-            Map<String, Object> response = new HashMap<>();
-            response.put("likes", post.getLikes());
-            response.put("liked", liked);
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
+
 
 }
 

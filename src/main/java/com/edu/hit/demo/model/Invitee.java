@@ -2,26 +2,11 @@ package com.edu.hit.demo.model;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Invitee {
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public Users getInviter() {
-        return inviter;
-    }
-
-    public Users getInvitee() {
-        return invitee;
-    }
-
-
-
-
 
 
     public void setId(Long id) {
@@ -45,10 +30,6 @@ public class Invitee {
     private Users inviter;
     @OneToOne
     private Users invitee;
-
-    public Integer getResponse() {
-        return response;
-    }
 
     public void setResponse(Integer response) {
         this.response = response;

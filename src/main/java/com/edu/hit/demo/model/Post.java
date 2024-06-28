@@ -16,27 +16,6 @@ import java.util.List;
 @Entity
 public class Post {
 
-    /*
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String email;
-
-    private String username;
-    private String caption;
-
-
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL, orphanRemoval = true) // 一对多关联，Image 类中需要有一个 Post 类型的字段
-    private List<Image> imageData = new ArrayList<>();
-
-
-    private int likes = 0;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-
-     */
     /*保存上传图片的用户邮箱、用户名
      *图片标题、点赞数、一对多映射评论
      */
@@ -47,6 +26,8 @@ public class Post {
     private String email;
 
     private String username;
+
+    @Column(unique = true)
     private String caption;
 
     private int likes = 0;
@@ -55,18 +36,6 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
 
 
-
-    @ElementCollection
-    private List<String> likedBy = new ArrayList<>();
-
-    // Getters and Setters
-    public List<String> getLikedBy() {
-        return likedBy;
-    }
-
-    public void setLikedBy(List<String> likedBy) {
-        this.likedBy = likedBy;
-    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -91,7 +60,5 @@ public class Post {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
-
-
 
 }

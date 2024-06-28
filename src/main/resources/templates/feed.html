@@ -92,11 +92,9 @@
             <h3 th:text="${post.username}"></h3>
             <p th:text="${post.email}"></p>
             <p th:text="${post.caption}"></p>
-            <!--
-            <img th:src="@{${post.imageUrl}}" alt="User photo">
-            -->
             <div class="actions">
                 <a th:href="@{/postDetail/{postId}(postId=${post.id})}" class="btn">查看详情</a>
+                <a th:href="@{/deletePost/{postId}(postId=${post.id})}" class="btn">删除</a>
                 <button th:onclick="'likePost(' + ${post.id} + ')'">Like</button>
                 <button th:onclick="'commentPost(' + ${post.id} + ')'">Comment</button>
                 <span th:text="${post.likes} + ' likes'"></span>
@@ -114,6 +112,7 @@
                 // Update the like count in the DOM
                 document.querySelector(`#post-${postId} .actions span`).textContent = `${data.likes} likes`;
             });
+        window.location.reload();
     }
 
     function commentPost(postId) {
@@ -128,7 +127,6 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Optionally update the comments in the DOM
                     alert("Comment posted!");
                 });
         }

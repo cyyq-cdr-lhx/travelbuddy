@@ -3,13 +3,11 @@ package com.edu.hit.demo.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-@Setter
 @Getter
+@Setter
 @Entity
 public class Comment {
-/*保存评论id 内容 用户邮箱
-* 多对一映射图片
-*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,7 +18,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Post2 post;
+    private Post post;
 
     public Comment() {}
 
@@ -40,8 +38,7 @@ public class Comment {
 
     public void setEmail(String email){this.email = email;}
 
-    public void setPost(Post2 post) {
+    public void setPost(Post post) {
         this.post = post;
     }
 }
-
