@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Home</title>
     <style>
         body {
@@ -8,15 +9,32 @@
             margin: 0;
             padding: 0;
             background-color: #f8f9fa;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .container {
-            margin-top: 50px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明白色背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
         }
         h1 {
             color: #007bff;
+            font-size: 36px;
+            margin-bottom: 20px;
         }
-        button {
+        p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button-container button {
             background-color: #007bff;
             color: white;
             padding: 10px 20px;
@@ -24,21 +42,36 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
+            margin: 0 10px;
         }
-        button:hover {
+        .button-container button:hover {
             background-color: #0056b3;
+            transform: scale(1.1);
         }
-
     </style>
 </head>
 <body>
 <div class="container">
-    <h1 th:text="${message}"></h1>
-    <button onclick="window.location.href='/login'">Log in</button>
-    <button onclick="window.location.href='/signup'">Sign up</button>
+    <h1 th:text="${message}">Welcome</h1>
+    <p>This is a demo website showcasing HTML and CSS optimizations.</p>
+    <div class="button-container">
+        <button id="loginBtn">Log in</button>
+        <button id="signupBtn">Sign up</button>
+    </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            window.location.href = '/login';
+        });
+
+        document.getElementById('signupBtn').addEventListener('click', function() {
+            window.location.href = '/signup';
+        });
+    });
+</script>
 
 </body>
 </html>

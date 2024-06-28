@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Home Page</title>
+  <title>User Detail</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <style>
     body {
@@ -18,52 +18,15 @@
     header {
       background: #333;
       color: #fff;
-      padding-top: 30px;
-      min-height: 70px;
-      border-bottom: #77b300 3px solid;
-    }
-    header a, header h1 {
-      color: #fff;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-size: 16px;
+      padding: 20px 0;
+      text-align: center;
     }
     header h1 {
-      float: left;
-    }
-    header nav {
-      float: right;
-      margin-top: 10px;
-    }
-    header nav a {
-      margin-left: 20px;
-    }
-    .profile-section {
-      display: flex;
-      margin-top: 20px;
-    }
-    .profile-details, .profile-content {
-      width: 50%;
-      padding: 20px;
-      background: #fff;
-      margin-right: 10px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    }
-    .profile-content {
-      width: calc(50% - 10px);
-    }
-    .section {
-      margin-top: 20px;
-      background: #fff;
-      padding: 20px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    }
-    .section h2 {
-      margin-top: 0;
+      margin: 0;
     }
     .buttons {
-      text-align: center;
-      margin-top: 20px;
+      text-align: right;
+      margin-top: 10px;
     }
     .buttons a {
       display: inline-block;
@@ -72,7 +35,29 @@
       color: #fff;
       text-decoration: none;
       border-radius: 5px;
-      margin: 10px 0;
+      margin-left: 10px;
+    }
+    .profile-section {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+    .profile-details, .profile-content {
+      width: 48%;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .section {
+      margin-top: 20px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    .section h2 {
+      margin-top: 0;
     }
     .interests-list {
       list-style-type: none;
@@ -91,12 +76,9 @@
 <header>
   <div class="container">
     <h1>User Detail</h1>
-
     <div class="buttons">
-      <a th:href="@{/sendInvite(tarUserEmail = ${viewUser.email})}">send Invite</a>
-    </div>
-    <div class="buttons">
-      <a th:href="@{/backToAutoTeam}">back</a>
+      <a th:href="@{/sendInvite(tarUserEmail = ${viewUser.email})}">Send Invite</a>
+      <a th:href="@{/backToAutoTeam}">Back</a>
     </div>
   </div>
 </header>
@@ -105,58 +87,28 @@
   <div class="profile-section">
     <div class="profile-details">
       <h2>User Profile</h2>
-      <p><strong>Username:</strong></p>
-      <p th:text="${viewUser.username}"></p>
-      <p><strong>Email:</strong></p>
-      <p th:text="${viewUser.email}"></p>
-      <p><strong>Gender:</strong> </p>
-      <p th:text="${viewUser.gender}"></p>
-      <p><strong>Birthdate:</strong> </p>
-      <p th:text="${viewUser.birthdate}"></p>
-      <p><strong>Bio:</strong></p>
-      <p th:text="${viewUser.bio}"></p>
+      <p><strong>Username:</strong> <span th:text="${viewUser.username}"></span></p>
+      <p><strong>Gender:</strong> <span th:text="${viewUser.gender}"></span></p>
+      <p><strong>Birthdate:</strong> <span th:text="${viewUser.birthdate}"></span></p>
+      <p><strong>Bio:</strong> <span th:text="${viewUser.bio}"></span></p>
     </div>
     <div class="profile-content">
       <div class="section">
-        <h2>我的旅程</h2>
-        <!-- My Journeys content here -->
+        <h2>My Journeys</h2>
+        <!-- Placeholder for My Journeys content -->
       </div>
       <div class="section">
-        <h2>Travel interests:</h2>
+        <h2>Travel Interests:</h2>
         <ul class="interests-list" th:if="${vUserInterests}">
           <li th:each="interest : ${vUserInterests}">
-            <p><strong>Start City:</strong> <span th:text="${interest.startcity}">Start City</span></p>
-            <p><strong>Destination:</strong> <span th:text="${interest.destination}">Destination</span></p>
-            <p><strong>Duration:</strong> <span th:text="${interest.duration}">Duration</span> days</p>
-            <p><strong>Start Date:</strong> <span th:text="${interest.startDay}">Start Date</span></p>
-            <p><strong>End Date:</strong> <span th:text="${interest.endDay}">End Date</span></p>
-
-            <form th:action="@{/modifyInterest}" method="get">
-              <input type="hidden" name="id" th:value="${interest.id}" />
-              <button type="submit">Modify</button>
-            </form>
-            <form th:action="@{/deleteInterest}" method="get">
-              <input type="hidden" name="id" th:value="${interest.id}" />
-              <button type="submit">Delete</button>
-
-            </form>
+            <p><strong>Start City:</strong> <span th:text="${interest.startcity}"></span></p>
+            <p><strong>Destination:</strong> <span th:text="${interest.destination}"></span></p>
+            <p><strong>Duration:</strong> <span th:text="${interest.duration}"></span> days</p>
+            <p><strong>Start Date:</strong> <span th:text="${interest.startDay}"></span></p>
+            <p><strong>End Date:</strong> <span th:text="${interest.endDay}"></span></p>
           </li>
         </ul>
         <p th:if="${#lists.isEmpty(vUserInterests)}">No previous interests found.</p>
-      </div>
-      <div class="section">
-        <h2>旅行相册</h2>
-        <div class="buttons">
-          <a th:href="@{/upload(email = ${homeUser.getEmail()})}">上传图像</a>
-        </div>
-        <!-- Photo Gallery content here -->
-      </div>
-      <div class="section">
-        <h2>我的旅行日志</h2>
-        <div class="buttons">
-          <a href="#">新建日志</a>
-        </div>
-        <!-- Travel Logs content here -->
       </div>
     </div>
   </div>

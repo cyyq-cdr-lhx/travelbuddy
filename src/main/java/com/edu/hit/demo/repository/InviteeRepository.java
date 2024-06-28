@@ -9,5 +9,6 @@ import java.util.List;
 public interface InviteeRepository extends JpaRepository<Invitee, Long> {
     public List<Invitee> findAllByInvitee(Users invitee);
     public List<Invitee> findAllByInviter(Users inviter);
+    public Invitee findAllByInviterAndInvitee(Users inviter, Users invitee);
 
 }

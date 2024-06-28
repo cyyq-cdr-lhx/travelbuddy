@@ -19,8 +19,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void saveUser(Users user) {
-        userRepository.save(user);
+    public Users saveUser(Users user) {
+        return userRepository.save(user);
     }
 
     public void deleteUser(Integer id) {
@@ -38,5 +38,8 @@ public class UserService {
     public List<Users> findInvitersByInvitee(Users invitee){
         return userRepository.findUsersByInvitee(invitee);
     }
-}
 
+    public List<Users> findUsersByUsernameIgnoreCase(String username) {
+        return userRepository.findByUsernameIgnoreCase(username);
+    }
+}

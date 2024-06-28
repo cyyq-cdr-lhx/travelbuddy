@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Auto Team</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
@@ -11,9 +12,27 @@
             padding: 0;
         }
         .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
             width: 80%;
             margin: auto;
-            overflow: hidden;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .user-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .user-list li {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 5px;
         }
         header {
             background: #333;
@@ -35,31 +54,52 @@
             margin-left: 20px;
             text-transform: uppercase;
         }
-        .section {
-            background: #fff;
-            margin-top: 20px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .logout-button {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
         }
-        .section h2 {
-            margin-top: 0;
-        }
-        .sub-section {
-            margin-top: 20px;
-        }
-        .sub-section h3 {
-            margin-top: 0;
-        }
-        .user-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .user-list li {
-            background: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
+        .logout-button button {
+            padding: 10px 20px;
+            background-color: #77b300;
+            color: #fff;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .logout-button button:hover {
+            background-color: #5c8c00;
+        }
+        .buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #77b300;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .search-form {
+            margin-bottom: 20px;
+        }
+        .search-form input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .search-form button {
+            padding: 10px 20px;
+            background-color: #77b300;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-form button:hover {
+            background-color: #5c8c00;
         }
     </style>
 </head>
@@ -67,38 +107,56 @@
 <header>
     <div class="container">
         <h1>Auto Team</h1>
-        <nav>
-            <a th:href="@{/getProfile}">Profile</a>
-            <a th:href="@{/upload}">Upload Photo</a>
-            <a th:href="@{/feed}">Back to Feed</a>
-        </nav>
+        <div class="logout-button">
+            <button onclick="window.location.href='/backToHomePage'">Back To HomePage</button>
+        </div>
     </div>
 </header>
 
 <div class="container">
     <div class="section">
+        <h2>Search Users</h2>
+        <form class="search-form" action="#" th:action="@{/searchUsers}" method="get">
+            <input type="text" name="username" placeholder="Enter username" required>
+            <button type="submit">Search</button>
+        </form>
+        <div th:if="${searchedUsers != null}">
+            <h3>Search Results</h3>
+            <ul class="user-list">
+                <li th:each="user : ${searchedUsers}">
+                    <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+                    <p><strong>Bio:</strong> <span th:text="${user.bio}"></span></p>
+                    <div class="buttons">
+                        <a th:href="@{/viewUserDetail/{userEmail}(userEmail = ${user.email})}">View Details</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Existing sections... -->
+    <!-- Matched Users section -->
+    <div class="section">
         <h2>Matched Users</h2>
         <div th:each="user : ${matchedUsers}" class="user">
             <div>
                 <h3 th:text="${user.username}"></h3>
-                <p th:text="'Email: ' + ${user.email}"></p>
                 <p th:text="'Bio: ' + ${user.bio}"></p>
                 <div class="buttons">
                     <a th:href="@{/viewUserDetail/{userEmail}(userEmail = ${user.getEmail()})}">查看详情</a>
                 </div>
-
             </div>
-
         </div>
     </div>
+
+    <!-- My Invitees section -->
     <div class="section">
         <h2>My Invitees</h2>
         <div class="sub-section">
             <h3>Pending</h3>
             <ul class="user-list">
-                <li th:each="invitee : ${myInvitees}" th:if="${invitee.getResponse()== 0}">
+                <li th:each="invitee : ${myInvitees}" th:if="${invitee.getResponse() == 0}">
                     <p><strong>Username:</strong> <span th:text="${invitee.invitee.username}"></span></p>
-                    <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
                 </li>
             </ul>
         </div>
@@ -108,6 +166,8 @@
                 <li th:each="invitee : ${myInvitees}" th:if="${invitee.response == 1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.invitee.username}"></span></p>
                     <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
+                    <p>Contact your mate by email!</p>
+                    <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
                 </li>
             </ul>
         </div>
@@ -116,12 +176,36 @@
             <ul class="user-list">
                 <li th:each="invitee : ${myInvitees}" th:if="${invitee.response == -1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.invitee.username}"></span></p>
-                    <p><strong>Email:</strong> <span th:text="${invitee.invitee.email}"></span></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Received Invitation section -->
+    <div class="section">
+        <h2>Received Invitation</h2>
+        <div class="sub-section">
+            <h3>Pending</h3>
+            <ul class="user-list">
+                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse() == 0}">
+                    <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
+                    <div class="buttons">
+                        <a th:href="@{/acceptInvite(inviterEmail=${invitee.getInviter().email})}">接受邀请</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sub-section">
+            <h3>Accepted</h3>
+            <ul class="user-list">
+                <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse() == 1}">
+                    <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
+                    <p><strong>Email:</strong> <span th:text="${invitee.inviter.email}"></span></p>
+                    <p>Contact your friend by email!</p>
                 </li>
             </ul>
         </div>
     </div>
 </div>
-
 </body>
 </html>
