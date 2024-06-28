@@ -93,7 +93,7 @@ public class HomeController {
                 newUser.setUsername(signUser.getUsername());
                 userService.saveUser(newUser);
                 model.addAttribute("homeUser", newUser);
-                return "redirect:/homePage";
+                return "redirect:/login";
             }
             else{
                 model.addAttribute("signupError","The password is inconsistent, please re-enter it");
