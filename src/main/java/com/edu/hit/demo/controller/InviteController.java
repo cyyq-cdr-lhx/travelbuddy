@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.util.List;
 
 @Controller
-@SessionAttributes({"homeUser", "matchedUsers","inviters","myInvitees"})
+@SessionAttributes({"homeUser", "matchedUsers","inviters","myInvitees","viewUser","invitee"})
 public class InviteController {
     @Autowired
     private InviteService inviteService;
@@ -42,7 +42,7 @@ public class InviteController {
             if(aInvite.getInvitee().getEmail().equals(tarUserEmail)){
                 // 如果已经存在邀请关系，可以根据需要采取其他操作或返回错误信息
                 model.addAttribute("error", "Invite already exists between these users.");
-                model.addAttribute("homeUser",hUser);
+                //model.addAttribute("homeUser",hUser);
                 model.addAttribute("viewUser",tarUser);
                 model.addAttribute("matchedUsers",matchedUsers);
                 List<Interests> vUserInterests = interestService.getInterestByEmail(tarUserEmail);
@@ -74,11 +74,13 @@ public class InviteController {
 
 
 
-        model.addAttribute("homeUser", hUser);
+        //model.addAttribute("homeUser", hUser);
         model.addAttribute("matchedUsers", matchedUsers);
         model.addAttribute("inviters",inviters);
         model.addAttribute("myInvitees",myInvitees);
 
         return "sendInviteSuc";
     }
+
+
 }

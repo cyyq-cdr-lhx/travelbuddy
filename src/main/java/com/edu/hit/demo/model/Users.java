@@ -22,13 +22,6 @@ public class Users {
     private String username;
     private String email;
     private String gender;
-<<<<<<< HEAD
-
-
-    private String birthdate;
-    private String bio;
-=======
->>>>>>> ac97c35dd00386906c969a05187f7401c06c09b4
 
 
     private String birthdate;
@@ -38,9 +31,21 @@ public class Users {
     private List<Invitee> invitees;
 
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TravelLog> travelLogs;
+
+
     private String bio;
     private String password;
 
+    public List<TravelLog> getTravelLogs() {
+        return travelLogs;
+    }
+
+    public void setTravelLogs(List<TravelLog> travelLogs) {
+        this.travelLogs = travelLogs;
+    }
     public void setId(Integer id) {
         this.id = id;
     }
@@ -107,24 +112,6 @@ public class Users {
         return password;
     }
 
-<<<<<<< HEAD
-    public void setPassword(String password){
-        this.password = password;
-    }
-    public String getGender() {  return gender;    }
-
-    public void setGender(String gender) {this.gender = gender;    }
-
-    public String getBirthdate() { return birthdate;    }
-
-    public void setBirthdate(String birthdate) { this.birthdate = birthdate;    }
-
-    public String getBio() {   return bio;    }
-
-    public void setBio(String bio) {   this.bio = bio;  }
-
-}
-=======
 
 
 
@@ -137,4 +124,3 @@ public class Users {
 
 
 }
->>>>>>> ac97c35dd00386906c969a05187f7401c06c09b4

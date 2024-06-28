@@ -28,7 +28,8 @@ public class UserDetailController {
                                  @ModelAttribute("myInvitees") List<Users> myInvitees,
                                  @PathVariable("userEmail") String vUserEmail, Model model){
         System.out.println(vUserEmail);
-        model.addAttribute("homeUser",hUser);
+        System.out.println("homeUser:"+hUser.getEmail());
+        //model.addAttribute("homeUser",hUser);
         List<Interests> vUserInterests = interestService.getInterestByEmail(vUserEmail);
         Users vUser = userService.getUserByEmail(vUserEmail);
         model.addAttribute("viewUser",vUser);
@@ -38,4 +39,6 @@ public class UserDetailController {
         model.addAttribute("vUserInterests", vUserInterests);
         return "viewUserDetail";
     }
+
+
 }
