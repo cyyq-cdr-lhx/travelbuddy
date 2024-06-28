@@ -31,9 +31,21 @@ public class Users {
     private List<Invitee> invitees;
 
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TravelLog> travelLogs;
+
+
     private String bio;
     private String password;
 
+    public List<TravelLog> getTravelLogs() {
+        return travelLogs;
+    }
+
+    public void setTravelLogs(List<TravelLog> travelLogs) {
+        this.travelLogs = travelLogs;
+    }
     public void setId(Integer id) {
         this.id = id;
     }

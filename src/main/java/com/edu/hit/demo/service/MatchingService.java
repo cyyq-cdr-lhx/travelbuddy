@@ -26,33 +26,36 @@ public class MatchingService {
         List<Users> allUsers = userService.getAllUsers();
 
         // Remove the target user from the list of all users
-        allUsers.remove(targetUser);
+        allUsers.removeIf(user -> user.getEmail().equals(targetUser.getEmail()));
 
-        List<Interests> getInterests = interestService.getInterestByEmail(targetUser.getEmail());
-        List<Post> getPosts = postService.findPostsByEmail(targetUser.getEmail());
-        List<Comment> getComments = postService.findCommentsByEmail(targetUser.getEmail());
-
-
+        List<Interests> targetUserInterests = interestService.getInterestByEmail(targetUser.getEmail());
+        List<Post> targetUserPosts = postService.findPostsByEmail(targetUser.getEmail());
+        List<Comment> targetUserComments = postService.findCommentsByEmail(targetUser.getEmail());
 
         // Precompute target user vectors
-        Map<String, Double> targetInterestVector = computeInterestVector(getInterests);
-        Map<String, Double> targetPostVector = computePostVector(getPosts);
-        Map<String, Double> targetCommentVector = computeCommentVector(getComments);
+        Map<String, Double> targetInterestVector = computeInterestVector(targetUserInterests);
+        Map<String, Double> targetPostVector = computePostVector(targetUserPosts);
+        Map<String, Double> targetCommentVector = computeCommentVector(targetUserComments);
 
         // Compute similarity scores
         Map<Users, Double> similarityScores = new HashMap<>();
         for (Users user : allUsers) {
-            double interestScore = computeCosineSimilarity(targetInterestVector, computeInterestVector(getInterests));
-            double postScore = computeCosineSimilarity(targetPostVector, computePostVector(getPosts));
-            double commentScore = computeCosineSimilarity(targetCommentVector, computeCommentVector(getComments));
+            List<Interests> userInterests = interestService.getInterestByEmail(user.getEmail());
+            List<Post> userPosts = postService.findPostsByEmail(user.getEmail());
+            List<Comment> userComments = postService.findCommentsByEmail(user.getEmail());
+
+            double interestScore = computeCosineSimilarity(targetInterestVector, computeInterestVector(userInterests));
+            double postScore = computeCosineSimilarity(targetPostVector, computePostVector(userPosts));
+            double commentScore = computeCosineSimilarity(targetCommentVector, computeCommentVector(userComments));
 
             double totalScore = 0.4 * interestScore + 0.4 * postScore + 0.2 * commentScore;
             similarityScores.put(user, totalScore);
         }
 
-        // Sort users by similarity scores
+        // Sort users by similarity scores and get top 5
         return similarityScores.entrySet().stream()
                 .sorted(Map.Entry.<Users, Double>comparingByValue().reversed())
+                .limit(5)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }

@@ -54,8 +54,19 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-// Getters and Setters
 
+
+    @ElementCollection
+    private List<String> likedBy = new ArrayList<>();
+
+// Getters and Setters
+    public List<String> getLikedBy() {
+        return likedBy;
+    }
+
+    public void setLikedBy(List<String> likedBy) {
+        this.likedBy = likedBy;
+    }
     public void setId(Long id) {
         this.id = id;
     }

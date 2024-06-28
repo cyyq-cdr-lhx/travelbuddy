@@ -9,6 +9,8 @@ import com.edu.hit.demo.service.PostService;
 import com.edu.hit.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
 
 @Controller
 @SessionAttributes({"homeUser"})
@@ -115,7 +114,8 @@ public class PostController {
                 images.add("/uploads/" + hUser.getEmail() + "/" + file.getName());
             }
         }
-
+        boolean liked = post.getLikedBy().contains(hUser.getEmail());
+        model.addAttribute("liked", liked);
         model.addAttribute("images", images);
         model.addAttribute("homeUser",hUser);
         model.addAttribute("post",post);
@@ -138,4 +138,33 @@ public class PostController {
         postService.commentPost(id, payload.get("text"));
         return Collections.singletonMap("status", "success");
     }
+
+
+    @PostMapping("/{postId}/like")
+    public ResponseEntity<Map<String, Object>> likePost(@PathVariable Long postId, @RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            boolean liked;
+            if (post.getLikedBy().contains(email)) {
+                post.getLikedBy().remove(email);
+                post.setLikes(post.getLikes() - 1);
+                liked = false;
+            } else {
+                post.getLikedBy().add(email);
+                post.setLikes(post.getLikes() + 1);
+                liked = true;
+            }
+            postRepository.save(post);
+            Map<String, Object> response = new HashMap<>();
+            response.put("likes", post.getLikes());
+            response.put("liked", liked);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
 }
+

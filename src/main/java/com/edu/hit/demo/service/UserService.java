@@ -38,5 +38,9 @@ public class UserService {
     public List<Users> findInvitersByInvitee(Users invitee){
         return userRepository.findUsersByInvitee(invitee);
     }
+
+    public List<Users> findUsersByUsernameIgnoreCase(String username) {
+        return userRepository.findByUsernameIgnoreCase(username);
+    }
 }
 
