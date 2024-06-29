@@ -208,8 +208,13 @@
             <ul class="user-list">
                 <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse() == 0}">
                     <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
+                    <p><strong>Gender:</strong> <span th:text="${invitee.inviter.gender}"></span></p>
+                    <p><strong>Birthdate:</strong> <span th:text="${invitee.inviter.birthdate}"></span></p>
                     <div class="buttons">
-                        <a th:href="@{/acceptInvite(inviterEmail=${invitee.getInviter().email})}">接受邀请</a>
+                        <a th:href="@{/acceptInvite(inviterEmail=${invitee.getInviter().email})}">Accept</a>
+                    </div>
+                    <div class="buttons">
+                        <a th:href="@{/rejectInvite(inviterEmail=${invitee.getInviter().email})}">Reject</a>
                     </div>
                 </li>
             </ul>
@@ -219,6 +224,8 @@
             <ul class="user-list">
                 <li th:each="invitee : ${inviters}" th:if="${invitee.getResponse() == 1}">
                     <p><strong>Username:</strong> <span th:text="${invitee.inviter.username}"></span></p>
+                    <p><strong>Gender:</strong> <span th:text="${invitee.inviter.gender}"></span></p>
+                    <p><strong>Birthdate:</strong> <span th:text="${invitee.inviter.birthdate}"></span></p>
                     <p><strong>Email:</strong> <span th:text="${invitee.inviter.email}"></span></p>
                     <p>Contact your friend by email!</p>
                 </li>
